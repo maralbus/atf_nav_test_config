@@ -1,0 +1,43 @@
+idle:
+    monologs:
+        - [1.0, "Test-Test 1 2 3 Juhu?"] # probability, voice_output
+        - [1.0, "Hallo, ich kann Sprechen! Rede mit mir!"]
+        - [1.0, "Halloo?"]
+        - [1.0, "Paul ist einsatzbereit."]
+        - [1.0, "Du kannst gerne mit mir reden."]
+        - [1.0, "Du kannst gerne mit mir sprechen."]
+
+navigation:
+    monologs:
+        - [1.0, "Heute fahre ich eher gemütlich. Ich bin ja kein D-Zug!"]
+        - [1.0, "Hier gibt es echt viele Sachen!"]
+        - [1.0, "Ach, heute ist ein schöner Tag."]
+        - [1.0, "Ich freue mich schon auf meine Pause."]
+        - [1.0, "Na hoffentlich weiß ich noch wo es das hier gibt."]
+        - [1.0, "Wo ist denn Tech Nick?"]
+
+locations:
+    apple:
+        area: [1.5, -2.3, 1.0] #x, y, radius
+        monologs:
+            - [1.0, "Apple Area - Satz 1"] # probability, voice output
+            - [1.0, "Apple Area - Satz 2"]
+            - [1.0, "Apple Area - Satz 3"]
+    handy:
+        area: [4.6, -2.25, 1.0] #x, y, radius
+        monologs:
+            - [1.0, "Handy Area - Satz 1"] # probability, voice output
+            - [1.0, "Handy Area - Satz 2"]
+            - [1.0, "Handy Area - Satz 3"]
+    gang:
+        area: [-7.5, -3.36, 1.0] #x, y, radius
+        monologs:
+            - [1.0, "Gang Area - Satz 1"] # probability, voice output
+            - [1.0, "Gang Area - Satz 2"]
+            - [1.0, "Gang Area - Satz 3"]
+    werkstatt:
+        area: [-3.35, -3.68, 0.5] #x, y, radius
+        monologs:
+            - [1.0, "Werkstatt Area - Satz 1"] # probability, voice output
+            - [1.0, "Werkstatt Area - Satz 2"]
+            - [1.0, "Werkstatt Area - Satz 3"]

@@ -1,0 +1,2 @@
+# scan topics which node subscribes to
+input_scans: ["/base_laser_front/scan", "/base_laser_left/scan","/base_laser_right/scan"]

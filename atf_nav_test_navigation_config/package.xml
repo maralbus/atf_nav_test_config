@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>atf_nav_test_navigation_config</name>
+  <version>0.0.0</version>
+  <description>The atf_nav_test_navigation_config package</description>
+
+  <maintainer email="marcel.albus@ipa.fraunhofer.de">Marcel Albus</maintainer>
+  <maintainer email="marcel.albus@ipa.fraunhofer.de">Marcel Albus</maintainer>
+
+  <license>private</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>topic_tools</exec_depend>
+
+</package>

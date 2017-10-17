@@ -1,0 +1,43 @@
+# Odometry frame to which tf and publisher should publish
+odom_frame: "odom_combined"
+
+# Base frame of the robot relative to which odom frame is published
+base_frame: "base_footprint"
+
+# Enables the fusion of the wheel odometry data with the IMU
+enable_imu: false
+
+# Enables the fusion of the wheel odometry data with the visual odoemtry data
+enable_visual_odom: false
+
+# Maximum allowed timestep betwween two incoming measurements
+max_timestep: 2.0 # [sec]
+
+# Maximum age of wheel odometry data to be allowed for updating the state
+max_wheel_odom_age: 0.1 # [sec]
+
+# Maximum age of imu data to be allowed for updating the state
+max_imu_age: 0.1 # [sec]
+
+# Maximum age of wheel odometry data to be allowed for updating the state
+max_visual_odom_age: 0.2 # [sec]
+
+
+########################
+#### Variance gains ####
+########################
+
+# wheel odom
+gain_wheel_odom_var_v_x: 1 # vel_x
+gain_wheel_odom_var_v_y: 1 # vel_y
+gain_wheel_odom_var_v_yaw: 1 # vel_yaw
+
+# imu
+gain_imu_var_v_yaw: 1 # vel_yaw
+gain_imu_var_acc_x: 1 # acc_x
+gain_imu_var_acc_y: 1 # acc_y
+
+# visual odom
+gain_visual_odom_var_v_x: 1 # vel_x
+gain_visual_odom_var_v_y: 1 # vel_y
+gain_visual_odom_var_v_yaw: 1 # vel_yaw

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="robot_env" default="$(optenv ROBOT_ENV !!NO_ROBOT_ENV_SET!!)"/>
+    
+    <!-- send navigation goals to parameter server -->
+    <include file="$(find msh_env_config)/upload_navigation_goals.launch">
+        <arg name="robot_env" value="$(arg robot_env)"/>
+    </include>
+    <test test-name="csv_checker_$(arg robot_env)" pkg="msh_env_config" type="csv_categories_checker.py">
+        <param name="categories_file" value="$(find msh_env_config)/envs/$(arg robot_env)/categories.csv" />
+    </test>
+
+</launch>

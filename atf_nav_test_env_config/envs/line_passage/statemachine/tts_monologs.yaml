@@ -1,0 +1,216 @@
+error:
+    general:
+        - [1.0, "Oh, da ist etwas schief gelaufen. Meine Erbauer müssen sich das ansehen!"]
+    state:
+        - [1.0, "Oh, da scheint wohl ein State einen Fehler zu haben. Meine Erbauer müssen sich das ansehen!"]
+    transition:
+        - [1.0, "Ein Fehler in einem State Übergang ist aufgetreten. Meine Erbauer müssen sich das ansehen!"]
+    robot:
+        - [1.0, "Ich habe einen Fehler in meinem System entdeckt, den ich nicht selbst beheben kann. Ich versuche einen Mitarbeiter zu erreichen, der mich wieder repariert."]
+
+voice_error:
+    unknown:
+        - [1.0, "Aa, ein unbekannter Fehler ist aufgetreten."]
+    no_network:
+        - [1.0, 'Oh, ich habe kein Internet.']
+    no_speech:
+        - [1.0, 'Ich konnte dich leider nicht verstehen.']
+    asr:
+        - [1.0, 'Ich konnte dich leider nicht verstehen.']
+    no_match:
+        - [1.0, 'Ich konnte dich leider nicht verstehen.']
+    no_leading_silence:
+        - [1.0, 'Hoppla, nicht so schnell. Bitte sprich nach dem biep.']
+    no_signal:
+        - [1.0, 'Aa, ich kann nichts hören.']
+    noisy_environment:
+        - [1.0, 'Bitte komme etwas näher oder sprich etwas lauter.']
+        - [0.1, 'Hier ist es aber laut. Komme bitte etwas näher oder sprich etwas lauter.']
+    signal_overload:
+        - [1.0, "Das war laut. Bitte halte etwas mehr Abstand von meinem Mikro."]
+    signal_too_quiet:
+        - [1.0, "Ich konnte dich leider nicht verstehen. Sprich bitte lauter!"]
+
+call_error:
+    occupied:
+        - [1.0, "Da ist gerade Belegt. Ich probiere es bei einem anderen Kollegen."]
+    dismissed:
+        - [1.0, "Er scheint wohl gerade beschäftigt zu sein. Ich versuche einen anderen Mitarbeiter zu erreichen."]
+    timedout:
+        - [1.0, "Es scheint wohl keiner abzuheben. Ich versuche es bei einem anderen Mitarbeiter."]
+
+greeting:
+    greetings:
+        - [1.0, 'Hallo!']
+        - [1.0, 'Sservus!']
+        - [1.0, 'Grüss Gott!']
+        - [1.0, 'Guten Tag!']
+        - [1.0, 'Grias die!']
+        - [1.0, 'Hallihallo!']
+        - [1.0, 'Hi!']
+        - [1.0, 'Hey!']
+    introductions:
+        - [1.0, 'Ich bin Paul!']
+        - [1.0, 'Mein Name ist Paul!']
+        - [1.0, 'Paul ist mein Name!']
+        - [1.0, 'Darf ich mich vorstellen. Paul!']
+    search_product:
+        - [1.0, 'Bist du auf der Suche nach einem Produkt?']
+        - [1.0, 'Willst du ein Produkt suchen?']
+        - [1.0, 'Soll ich dir bei einer Produktsuche helfen?']
+    questioning:
+        - [1.0, 'Ok! Willst du mich was fragen?']
+        - [1.0, 'Ok! Soll ich dir ein paar Fragen beantworten?']
+        - [1.0, 'In Ordnung! Wie wäre es mit einem Smol Tok?']
+    facebook:
+        - [1.0, 'Aber ich habe eine Frage an dich! Wollen wir Facebook-Freunde werden?']
+        - [1.0, 'Ich hätte aber noch eine Frage an dich! Willst du mit mir auf Facebook befreundet sein?']
+        - [1.0, 'Aber ich habe eine Frage an dich! Willst du mein Facebook-Freund sein?']
+    juhu:
+        - [1.0, 'Juhu! Das freut mich! Du findest mich auf Facebook unter Saturn Robo Paul.']
+    oh:
+        - [1.0, 'Oh, Schade! Aber du kannst mich auf Facebook unter Saturn Robo Paul finden.']
+    smalltalk_intros:
+        - [1.0, 'Wenn du willst kannst du mich was fragen!']
+        - [1.0, 'Frag mich ruhig etwas!']
+        - [1.0, 'Was willst du wissen?']
+        - [1.0, 'Frag mich was!']
+
+product_search:
+    which_product:
+        - [1.0, 'Welches Produkt suchst du?']
+    no_search_result:
+        - [1.0, 'Ich konnte keine Produkte mit dem Namen %s finden. Bitte nenne einen anderen Namen.']
+    no_voice_recognition:
+        - [1.0, 'Leider verstehe ich dich nicht.']
+    currect_understood:
+        - [1.0, 'Habe ich dein gesuchtes Produkt richtig verstanden?']
+    show_list:
+        - [1.0, 'Darf ich dir eine Liste mit den gefundenen Produkten anzeigen?']
+    search_again:
+        - [1.0, 'Wollen wir nochmal neu suchen?']
+    nav_to_department:
+        - [1.0, 'Darf ich dich in die Abteilung %s bringen?']
+
+navigation:
+    low_charge:
+        - [1.0, 'Oh, entschuldige. Das geht jetzt nicht. Ich muss zuerst meine Batterie etwas aufladen.']
+    pre_start:
+        - [1.0, 'Trete bitte ein Stück zurück!']
+    on_start:
+        - [1.0, 'Achtung jetzt fahr ich los! Bleib an mir dran!']
+    goal_reached:
+        - [1.0, "Wir sind angekommen! Soll ich dir einen Mitarbeiter rufen?"]
+    goal_reached_service:
+        - [1.0, 'Wir sind angekommen. Ziehe bitte ein Serviceticket, und wenn deine Nummer aufgerufen wird, kümmert sich sofort einer meiner humannohiden Kollegen um dich.']
+    goal_reached_wc:
+        - [1.0, 'Wir sind angekommen!']
+    goal_reached_pickup:
+        - [1.0, 'Wir sind angekommen! Du kannst dich direkt an den Schalter zur Online Abholung stellen.']
+    goal_failed_retry:
+        - [1.0, "Ich konnte das Ziel leider nicht erreichen. Soll ich es nochmals versuchen?"]
+    aborted:
+        - [1.0, 'Ich konnte mein Ziel nicht erreichen']
+    blacklisted:
+        - [1.0, 'Leider kann ich dich dort nicht hinbringen, da meine Kollegen diesen Bereich gerade umbauen!']
+
+nav_monitor:
+    path_blocked:
+        - [1.0, 'Huch, der Weg ist blockiert: Darf ich hier bitte mal durch?']
+        - [1.0, 'Leider komme ich hier nicht durch. Macht doch bitte Platz für mich.']
+        - [1.0, 'Oh jetzt wird es hier etwas eng: Könnte ich hier bitte durch?']
+        - [1.0, 'Achtung ich komme. Darf ich bitte vorbei?']
+    recovery:
+        - [1.0, 'Hier geht es wohl nicht weiter, ich schaue mich mal um.']
+        - [1.0, 'Wo geht es jetzt nochmals lang. Mal sehen...']
+    replan:
+        - [1.0, 'Der Weg scheint blockiert zu sein: Ich probiere einen anderen Weg.']
+        - [1.0, 'Hier ist kein durchkommen. Ich fahr wo anders lang.']
+        - [1.0, 'Scheint so als ob ich hier nicht zu meinem Ziel komme. Ich suche mir einen anderen Weg']
+
+staff_search:
+    monologs:
+        - [1.0, 'Schönes Wetter heute!']
+        - [1.0, 'Dumdidum...meine humannohiden Kollegen sind leider nicht so schnell wie ich.']
+    call_college:
+        - [1.0, 'Ok. Ich rufe dir jetzt einen meiner humannohiden Kollegen.']
+    call_message_product:
+        - [1.0, 'Hallo, hier ist Paul. Ein Kunde braucht Hilfe und wartet mit mir in der Abteilung: ']
+    call_message_poi:
+        - [1.0, 'Hallo, hier ist Paul. Ein Kunde braucht Hilfe und wartet an der ']
+    call_message_poi_product:
+        - [1.0, 'Hallo, hier ist Paul. Ein Kunde ist interessiert an %s und wartet an der ']
+    fail:
+        - [1.0, 'Leider sind alle meine menschlichen Kollegen gerade beschäftigt. Ich kann dir jetzt leider nicht mehr weiterhelfen, deshalb fahre ich wieder zurück! Sicherlich kommt bald ein Kollege auf dich zu, du kannst ja in der Zwischenzeit etwas stöbern.']
+    authenticated:
+        - [1.0, 'Ich mache mich dann mal wieder aus dem Staub. %s übernimmt für mich.']
+    staff_comming:
+        - [1.0, 'Mein Kollege ist auf dem Weg zu uns.']
+    call_monologs:
+        - [1.0, 'Da sollte gleich jemand abheben']
+        - [1.0, 'Ist gleich soweit']
+        - [1.0, 'Kurz Gedult']
+
+service:
+    online_pickup:
+        - [1.0, 'Soll ich dich zur Onnlain Abholung bringen?']
+    wc:
+        - [1.0, 'Soll ich dich zu den Toiletten bringen?']
+    info:
+        - [1.0, 'Soll ich dich zur Info bringen?']
+    repair:
+        - [1.0, 'Soll ich dich zur Reparaturannahme bringen?']
+
+discharge:
+    questions:
+        - [1.0, 'Ok! Ich habe dir ein paar Fragen beantwortet. Kannst du mir auch noch ein paar beantworten?']
+    help:
+        - [1.0, 'Konnte ich dir weiter helfen.']
+    performance:
+        - [1.0, 'Warst du mit meiner Leistung zufrieden?']
+    meet_again:
+        - [1.0, 'Würdest du mich gerne wiedersehen?']
+    facebook_friends:
+        - [1.0, 'Ok, schahde! Aber wollen wir Facebook Freunde werden?']
+    have_fun_shopping:
+        - [1.0, 'Ok! Dann wünsche ich viel Spaß beim Shoppen! Kannst du mir noch ein paar Fragen beantworten?']
+    three_questions:
+        - [1.0, 'Kannst du mir noch 3 Fragen beantworten?']
+    customer_away:
+        - [1.0, 'Ich kann meinen Kunden nicht mehr sehen. Dann werde ich mal wieder von vorne anfangen.']
+    servus:
+        - [1.0, 'Sservus']
+    bummer:
+        - [1.0, 'Ok, schahde! Ich bin nur neu gierig.']
+    juhu:
+        - [1.0, 'Juuhuu! Das freut mich! Du findest mich auf Facebook unter Saturn Robo Paul.']
+    bye1:
+        - [1.0, 'Ich freue mich auf deine Anfrage! Machs gut!']
+    bye2:
+        - [1.0, 'Viel Spaß euch! Tschüss!']
+    bye3:
+        - [1.0, 'Leider verstehe ich dich nicht und gehe daher zurück zu meiner Basisstation!']
+    bye4:
+        - [1.0, 'Ok! Dann wünsche ich viel Spaß beim Shoppen! Machs gut!']
+    bye5:
+        - [1.0, 'Ich mache mich dann so langsam wieder auf den Weg zurück! Machs gut!']
+        - [1.0, 'Ich mache mich dann so langsam wieder auf den Weg zurück! Tschüss!']
+    bye6:
+        - [1.0, 'Danke für deine Antworten! Machs gut!']
+        - [1.0, 'Danke für deine Antworten! Tschüss!']
+    fail:
+        - [1.0, 'OK! Vielleicht beim nächsten Mal! Machs gut!']
+    fail2:
+        - [1.0, 'OK! Vielleicht beim nächsten Mal!']
+
+product_list:
+    no_product_coord:
+        - [1.0, 'Meine Kollegen scheinen umgeräumt zu haben und ich weiß nicht genau wo das steht. Darf ich dich stattdessen in die Abteilung %s bringen?']
+    search_again:
+        - [1.0, 'Willst du nach einem anderen Produkt suchen?']
+    show_stehle:
+        - [1.0, 'Auf dem Monitor neben mir siehst Du die Produkte, die ich gefunden habe.']
+
+hey_paul:
+    hey:
+        - [1.0, 'Dann schieß los!']

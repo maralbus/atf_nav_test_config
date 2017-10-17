@@ -1,0 +1,16 @@
+////////////////////////////////////////////////////////////////////////////////
+// Custom materials
+
+material floor
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture floor.jpg
+      }
+    }
+  }
+}

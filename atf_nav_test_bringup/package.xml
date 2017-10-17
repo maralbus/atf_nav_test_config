@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>atf_nav_test_bringup</name>
+  <version>0.0.0</version>
+  <description>The atf_nav_test_bringup package</description>
+
+  <license>private</license>
+
+  <maintainer email="marcel.albus@ipa.fraunhofer.de">Marcel Albus</maintainer>
+  <author email="marcel.albus@ipa.fraunhofer.de">Marcel Albus</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roslaunch</depend>
+
+  <exec_depend>actionlib</exec_depend>
+  <exec_depend>actionlib_msgs</exec_depend>
+  <exec_depend>cob_bringup</exec_depend>
+  <exec_depend>cob_bringup_sim</exec_depend>
+  <exec_depend>cob_default_env_config</exec_depend>
+  <exec_depend>cob_default_robot_config</exec_depend>
+  <exec_depend>cob_gazebo_worlds</exec_depend>
+  <exec_depend>cob_helper_tools</exec_depend>
+  <exec_depend>cob_light</exec_depend>
+  <exec_depend>cob_linear_nav</exec_depend>
+  <exec_depend>cob_msgs</exec_depend>
+  <exec_depend>cob_people_detection</exec_depend>
+  <exec_depend>diagnostic_msgs</exec_depend>
+  <exec_depend>emotion_detection</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>ipa_laserscan_zone_filter</exec_depend>
+  <exec_depend>ipa_navigation_bringup</exec_depend>
+  <exec_depend>msh_env_config</exec_depend>
+  <exec_depend>msh_gazebo_worlds</exec_depend>
+  <exec_depend>msh_msgs</exec_depend>
+  <exec_depend>msh_nav_state_observer</exec_depend>
+  <exec_depend>msh_navigation_config</exec_depend>
+  <exec_depend>msh_robot_behavior</exec_depend>
+  <exec_depend>msh_robot_config</exec_depend>
+  <exec_depend>msh_people</exec_depend>
+  <exec_depend>msh_search_interface</exec_depend>
+  <exec_depend>msh_sipclient</exec_depend>
+  <exec_depend>msh_statemachine</exec_depend>
+  <exec_depend>msh_voice_control_bringup</exec_depend>
+  <exec_depend>nav_msgs</exec_depend>
+  <exec_depend>nodelet</exec_depend>
+  <exec_depend>pointcloud_to_laserscan</exec_depend>
+  <exec_depend>python-urllib3</exec_depend>
+  <exec_depend>rosapi</exec_depend>
+  <exec_depend>rosbag</exec_depend>
+  <exec_depend>rosbridge_server</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>slack_ros</exec_depend>
+  <exec_depend>smach_msgs</exec_depend>
+  <exec_depend>station_localizer</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>std_srvs</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>tf_conversions</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>topic_tools</exec_depend>
+  <exec_depend>zbar_ros</exec_depend>
+
+</package>

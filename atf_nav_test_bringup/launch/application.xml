@@ -1,0 +1,227 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="robot"/>
+    <arg name="robot_env"/>
+    <arg name="pkg_env_config"/>
+    <arg name="pkg_nav_config"/>
+    <arg name="pkg_nav_env_config"/>
+
+    <arg name="b1" default="localhost"/>
+    <arg name="t1" default="localhost"/>
+    <arg name="t2" default="localhost"/>
+    <arg name="t3" default="localhost"/>
+    <arg name="s1" default="localhost"/>
+    <arg name="h1" default="localhost"/>
+    <arg name="env-script" default="$(find cob_bringup)/env.sh"/>
+    <arg name="sim" default="false" />
+    <arg name="start_sm" default="false" />
+    <arg name="fake_gui" default="false" />
+    <arg name="start_emotion_detection" default="true" />
+
+    <!-- base -->
+    <group>
+        <machine name="$(arg b1)" address="$(arg b1)" env-loader="$(arg env-script)" default="true" timeout="30"/>
+
+        <include file="$(arg pkg_env_config)/upload_navigation_goals.launch">
+            <arg name="robot_env" value="$(arg robot_env)" />
+        </include>
+        <node name="visualize_navigation_goals" pkg="cob_helper_tools" type="visualize_navigation_goals.py" output="screen"/>
+        <rosparam ns="/diagnostic_aggregator/analyzers" command="load" file="$(find msh_robot_config)/robots/$(arg robot)/config/diagnostics_analyzers.yaml" />
+        <rosparam command="load" ns="/msh_android/android_script_server/control_buttons" file="$(find msh_robot_config)/robots/$(arg robot)/config/command_gui_buttons.yaml"/>
+        <rosparam command="load" ns="/msh_android/android_script_server/nav_buttons" file="$(arg pkg_env_config)/envs/$(arg robot_env)/command_gui_buttons.yaml"/>
+
+        <include file="$(find ipa_navigation_bringup)/ipa_navigation.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="robot_env" value="$(arg robot_env)"/>
+            <arg name="pkg_env_config" value="$(arg pkg_env_config)"/>
+            <arg name="pkg_nav_config" value="$(arg pkg_nav_config)"/>
+            <arg name="pkg_nav_env_config" value="$(arg pkg_nav_env_config)"/>
+            <arg name="path_segment_planner" value="true"/>
+        </include>
+        <!-- costmap zone filter -->
+        <node name="laserscan_zone_filter" pkg="ipa_laserscan_zone_filter" type="laserscan_zone_filter_node" output="screen">
+            <rosparam file="$(arg pkg_nav_config)/robots/$(arg robot)/nav/laserscan_zone_filter.yaml" command="load" />
+            <remap from="scan" to="scan_unified"/> <!-- input-->
+            <remap from="scan_filtered" to="costmap_scan_filtered" /> <!-- output-->
+        </node>
+        <node pkg="cob_linear_nav" type="cob_linear_nav" respawn="false" name="move_base_linear" output="log">
+            <remap from="odom" to="/base/odometry_controller/odometry"/>
+            <remap from="cmd_vel" to="/base/twist_mux/command_navigation"/>
+            <rosparam file="$(find msh_robot_config)/robots/$(arg robot)/config/linear_nav.yaml" command="load" />
+        </node>
+        <include file="$(find msh_nav_state_observer)/launch/nav_state_observer.launch"/>
+        <include file="$(find cob_bringup)/tools/hz_monitor.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="pkg_hardware_config" value="$(find msh_robot_config)"/>
+            <arg name="yaml_name" value="navigation"/>
+        </include>
+        <node pkg="cob_helper_tools" type="auto_init.py" name="auto_init" output="screen">
+            <rosparam command="load" file="$(find msh_robot_config)/robots/$(arg robot)/config/components.yaml"/>
+        </node>
+        <node pkg="cob_helper_tools" type="auto_recover.py" name="auto_recover" output="screen">
+            <rosparam command="load" file="$(find msh_robot_config)/robots/$(arg robot)/config/components.yaml"/>
+        </node>
+        <node pkg="msh_bringup" type="start_machine.py" name="start_machine" output="screen"/>
+        <node pkg="msh_bringup" type="start_error_monitor.py" name="start_error_monitor" output="screen"/>
+        <include file="$(find msh_bringup)/launch/rosbridge_websocket.launch"> <!-- for communication with GUI -->
+            <arg name="fake_gui" value="$(arg fake_gui)"/>
+        </include>
+        <!-- Publish new reference frame for torso camera laserscan with the origin of base link but torso rotation arround z azis-->
+        <include file="$(find msh_bringup)/launch/torso_rotated_base_link_node.launch">
+            <arg name="robot" value="$(arg robot)"/>
+        </include>
+        <include file="$(find msh_bringup)/launch/logging.launch">
+            <arg name="sim" value="$(arg sim)"/>
+        </include>
+        <include unless="$(arg sim)" file="$(find msh_bringup)/launch/slack.launch">
+            <arg name="robot" value="$(arg robot)"/>
+        </include>
+     </group>
+
+    <!-- torso -->
+    <group>
+        <machine name="$(arg t1)" address="$(arg t1)" env-loader="$(arg env-script)" default="true" timeout="30"/>
+        <node pkg="msh_search_interface" type="search_interface_node.py" name="search_interface" output="screen">
+             <param name="env_config_path" value="$(arg pkg_env_config)/envs/$(arg robot_env)" />
+        </node>
+        <include file="$(find cob_bringup)/tools/hz_monitor.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="pkg_hardware_config" value="$(find msh_robot_config)"/>
+            <arg name="yaml_name" value="search"/>
+        </include>
+        <include file="$(find emotion_detection)/launch/detection_filter_3d.launch" />
+        <node if="$(arg sim)" ns="torso_cam3d_right" pkg="nodelet" type="nodelet" name="torso_cam3d_right_nodelet_manager" args="manager" output="screen">
+          <param name="num_worker_threads" value="2" />
+        </node>
+        <include ns="pointcloud_to_laserscan_torso_right" file="$(find msh_bringup)/launch/pointcloud_to_laserscan_nodelet.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="camera_namespace" value="torso_cam3d_right"/>
+        </include>
+    </group>
+    <group>
+        <machine name="$(arg t2)" address="$(arg t2)" env-loader="$(arg env-script)" default="true" timeout="30"/>
+
+        <include if="$(arg start_sm)" file="$(find msh_statemachine)/launch/machine.launch">
+            <arg name="robot_env" value="$(arg robot_env)"/>
+            <arg name="sim" value="$(arg sim)"/>
+        </include>
+        <node pkg="msh_bringup" type="state_machine_monitor.py" name="state_machine_monitor"/>
+        <include file="$(find msh_statemachine)/launch/error_monitor.launch">
+            <arg name="robot_env" value="$(arg robot_env)"/>
+            <arg name="sim" value="$(arg sim)"/>
+        </include>
+        <include file="$(find cob_bringup)/tools/hz_monitor.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="pkg_hardware_config" value="$(find msh_robot_config)"/>
+            <arg name="yaml_name" value="state_machine"/>
+        </include>
+        <!-- the realsense pointcloud is noisy -> Filter pointcloud befor converting to laserscan -->
+        <!-- reduce the pointcloud before filtering to speed up the process -->
+        <!-- the realsense pointcloud is noisy -> Filter pointcloud befor converting to laserscan -->
+        <!-- reduce the pointcloud before filtering to speed up the process -->
+        <node if="$(arg sim)" ns="torso_cam3d_down" pkg="nodelet" type="nodelet" name="torso_cam3d_down_nodelet_manager" args="manager" output="screen">
+            <param name="num_worker_threads" value="2" />
+        </node>
+        <include ns="roi_outlier_removal_torso_down" file="$(find msh_bringup)/launch/roi_outlier_removal_nodelet.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="camera_namespace" value="torso_cam3d_down"/>
+            <arg name="in_pointcloud_topic" value="/torso_cam3d_down/depth/points"/>
+            <arg name="out_pointcloud_topic" value="/torso_cam3d_down/depth/roi_points"/>
+        </include>
+        <!-- Filter the reduced pointcloud -->
+        <include ns="pcl_statistical_outlier_filter_torso_down" file="$(find msh_bringup)/launch/pcl_statistical_outlier_filter_nodelet.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="camera_namespace" value="torso_cam3d_down"/>
+            <arg name="in_pointcloud_topic" value="/torso_cam3d_down/depth/roi_points"/>
+            <arg name="out_pointcloud_topic" value="/torso_cam3d_down/depth/points_filtered"/>
+        </include>
+        <!-- Convert the filtered pointcloud to laserscan -->
+        <include ns="pointcloud_to_laserscan_torso_down" file="$(find msh_bringup)/launch/pointcloud_to_laserscan_nodelet.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="camera_namespace" value="torso_cam3d_down"/>
+            <arg name="pc_topic_in_namespace" value="depth/points_filtered"/>
+        </include>
+        <!-- check whether sensor processing pipeline is up -->
+        <include file="$(find cob_bringup)/tools/hz_monitor.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="pkg_hardware_config" value="$(find msh_robot_config)"/>
+            <arg name="yaml_name" value="sensor_processing"/>
+            <arg name="sim" value="$(arg sim)"/>
+        </include>
+    </group>
+    <group>
+        <machine name="$(arg t3)" address="$(arg t3)" env-loader="$(arg env-script)" default="true" timeout="30"/>
+
+        <node if="$(arg sim)" ns="torso_cam3d_left" pkg="nodelet" type="nodelet" name="torso_cam3d_left_nodelet_manager" args="manager" output="screen">
+            <param name="num_worker_threads" value="2" />
+        </node>
+        <include ns="pointcloud_to_laserscan_torso_left" file="$(find msh_bringup)/launch/pointcloud_to_laserscan_nodelet.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="camera_namespace" value="torso_cam3d_left"/>
+        </include>
+        <include file="$(find msh_bringup)/launch/station_localizer.launch">
+            <arg name="robot_env" value="$(arg robot_env)"/>
+            <arg name="pkg_env_config" value="$(arg pkg_env_config)"/>
+        </include>
+        <include file="$(find msh_robot_behavior)/launch/behavior.launch">
+            <arg name="robot_env" value="$(arg robot_env)"/>
+            <arg name="sim" value="$(arg sim)"/>
+        </include>
+    </group>
+
+    <!-- sensorring -->
+    <group>
+        <machine name="$(arg s1)" address="$(arg s1)" env-loader="$(arg env-script)" default="true" timeout="30"/>
+        <include ns="people_detection_sensorring" file="$(find cob_people_detection)/ros/launch/people_detection.launch">
+            <arg name="camera_namespace" value="sensorring_cam3d_upright"/>
+            <arg name="launch_head_detector" value="true"/>
+            <arg name="launch_face_detector" value="true"/>
+            <arg name="launch_face_recognizer" value="false"/>
+            <arg name="launch_detection_tracker" value="false"/>
+            <arg name="launch_face_capture" value="false"/>
+            <arg name="launch_coordinator" value="false"/>
+            <arg name="display_results_with_image_view" value="false"/>
+        </include>
+        <node pkg="msh_bringup" type="robot_status_retriever.py" name="robot_status" output="screen"/>
+        <include file="$(find msh_bringup)/launch/poi.launch">
+            <arg name="robot" value="$(arg robot)"/>
+        </include>
+        <node pkg="zbar_ros" type="barcode_reader_node" name="barcode_reader" output="screen">
+            <remap from="image" to="/sensorring_cam3d/rgb/image_raw"/>
+        </node>
+    </group>
+
+    <!-- head -->
+    <group>
+        <machine name="$(arg h1)" address="$(arg h1)" env-loader="$(arg env-script)" default="true" timeout="30"/>
+        <include file="$(find msh_voice_control_bringup)/launch/voice_control.launch">
+            <arg name="language" value="german"/>
+        </include>
+        <include file="$(find cob_bringup)/tools/hz_monitor.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="pkg_hardware_config" value="$(find msh_robot_config)"/>
+            <arg name="yaml_name" value="voice_control"/>
+        </include>
+        <include file="$(find msh_sipclient)/launch/linphone_ros.launch"/>
+        <include file="$(find cob_bringup)/tools/hz_monitor.launch">
+            <arg name="robot" value="$(arg robot)"/>
+            <arg name="pkg_hardware_config" value="$(find msh_robot_config)"/>
+            <arg name="yaml_name" value="linphone"/>
+        </include>
+        <include if="$(arg start_emotion_detection)" file="$(find emotion_detection)/launch/emotion_detection.launch">
+            <arg name="image" value="/head_cam_upright/image_rect_color"/>
+            <arg name="camera_info" value="/head_cam/camera_info"/>
+            <arg name="image_inplane_transform" value="/image_flip_head_cam/image_flip_head_cam/colorimage_inplane_transform"/>
+        </include>
+        <include file="$(find cob_bringup)/drivers/sound.launch">
+            <arg name="component_name" value="sound_test" />
+            <arg name="robot" value="$(arg robot)" />
+        </include>
+        <param name="/sound_test/cepstral_voice" value="Matthias"/>
+    </group>
+
+    <!-- set b1 as default machine -->
+    <machine name="$(arg b1)" address="$(arg b1)" env-loader="$(arg env-script)" default="true" timeout="30"/>
+
+</launch>

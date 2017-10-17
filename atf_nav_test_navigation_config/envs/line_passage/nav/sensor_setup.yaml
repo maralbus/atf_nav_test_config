@@ -1,0 +1,16 @@
+feature_sources:
+- laserline:
+    feature_type: line # vs. currently point/pose
+    base: robot_based # vs. map_based
+    default_measurement_covariance: [0.2, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.0, 0.0, 0.2]
+    default_assumption_covariance:  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+- lasermarker:
+    feature_type: point
+    base: robot_based # vs. map_based
+    default_measurement_covariance: [0.02, 0.0, 0.0, 0.02]
+    default_assumption_covariance:  [0.0, 0.0, 0.0, 0.0]
+- lasercorner:
+    feature_type: pose
+    base: robot_based # vs. map_based
+    default_measurement_covariance: [0.2, 0.0, 0.0, 0.0, 0.2, 0.0, 0.0, 0.0, 0.2]
+    default_assumption_covariance:  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]

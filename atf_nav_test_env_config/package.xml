@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>atf_nav_test_env_config</name>
+  <version>0.0.0</version>
+  <description>This package contains configuration files for the atf_nav_test_environment.</description>
+
+  <license>private</license>
+
+  <maintainer email="marcel.albus@ipa.fraunhofer.de">Marcel Albus</maintainer>
+  <author email="marcel.albus@ipa.fraunhofer.de">Marcel Albus</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roslaunch</depend>
+  <depend>rospy</depend>
+  <depend>rostest</depend>
+  <depend>rosunit</depend>
+
+</package>

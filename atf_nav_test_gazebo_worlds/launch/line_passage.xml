@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+
+	<arg name="robot_env" default="line_passage"/>
+
+	<!-- spawn environment -->
+	<include file="$(find cob_gazebo_worlds)/launch/world_urdf.xml">
+		<arg name="robot_env" value="$(arg robot_env)"/>
+		<arg name="file_path_urdf" value="$(find atf_nav_test_gazebo_worlds)/urdf/$(arg robot_env)/$(arg robot_env).urdf.xacro" />
+		<arg name="publish_world_state" value="true"/>
+	</include>
+
+</launch>

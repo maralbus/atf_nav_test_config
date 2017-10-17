@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <group ns="cob4-2">
+        <group ns="ipa-apartment">
+            <include file="$(find msh_bringup)/launch/application.xml">
+                <arg name="robot" value="cob4-2"/>
+                <arg name="robot_env" value="ipa-apartment"/>
+                <arg name="pkg_env_config" value="$(find msh_env_config)"/>
+                <arg name="pkg_nav_config" value="$(find msh_navigation_config)"/>
+                <arg name="pkg_nav_env_config" value="$(find msh_navigation_config)"/>
+                <arg name="start_sm" default="true" />
+                <arg name="fake_gui" default="false" />
+                <arg name="start_emotion_detection" default="true" />
+            </include>
+        </group>
+        <group ns="saturn-ingolstadt">
+            <include file="$(find msh_bringup)/launch/application.xml">
+                <arg name="robot" value="cob4-2"/>
+                <arg name="robot_env" value="saturn-ingolstadt"/>
+                <arg name="pkg_env_config" value="$(find msh_env_config)"/>
+                <arg name="pkg_nav_config" value="$(find msh_navigation_config)"/>
+                <arg name="pkg_nav_env_config" value="$(find msh_navigation_config)"/>
+                <arg name="start_sm" default="true" />
+                <arg name="fake_gui" default="false" />
+                <arg name="start_emotion_detection" default="true" />
+            </include>
+        </group>
+    </group>
+    <group ns="cob4-7">
+        <group ns="ipa-apartment">
+            <include file="$(find msh_bringup)/launch/application.xml">
+                <arg name="robot" value="cob4-7"/>
+                <arg name="robot_env" value="ipa-apartment"/>
+                <arg name="pkg_env_config" value="$(find msh_env_config)"/>
+                <arg name="pkg_nav_config" value="$(find msh_navigation_config)"/>
+                <arg name="pkg_nav_env_config" value="$(find msh_navigation_config)"/>
+                <arg name="start_sm" default="true" />
+                <arg name="fake_gui" default="false" />
+                <arg name="start_emotion_detection" default="true" />
+            </include>
+        </group>
+        <group ns="saturn-ingolstadt">
+            <include file="$(find msh_bringup)/launch/application.xml">
+                <arg name="robot" value="cob4-7"/>
+                <arg name="robot_env" value="saturn-ingolstadt"/>
+                <arg name="pkg_env_config" value="$(find msh_env_config)"/>
+                <arg name="pkg_nav_config" value="$(find msh_navigation_config)"/>
+                <arg name="pkg_nav_env_config" value="$(find msh_navigation_config)"/>
+                <arg name="start_sm" default="true" />
+                <arg name="fake_gui" default="false" />
+                <arg name="start_emotion_detection" default="true" />
+            </include>
+        </group>
+    </group>
+
+</launch>

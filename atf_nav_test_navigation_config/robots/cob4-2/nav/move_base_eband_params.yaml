@@ -1,0 +1,211 @@
+# -----------------------------------------------------------------
+# eband_trajectory_controller_params
+# -----------------------------------------------------------------
+
+# Maximum linear velocity
+max_vel_lin: 1.0
+
+# Maximum rotational velocity
+max_vel_th: 0.5
+
+# Damp maximal translational acceleration
+max_translational_acceleration: 0.4
+
+# Damp maximal rotational acceleration
+max_rotational_acceleration: 0.2
+
+# Scaling factor for veocity calculation
+scaled_radius_factor: 4.0
+
+# Minimum linear velocity
+min_vel_lin: 0.1
+
+# Minimum rotational velocity
+min_vel_th: 0.0
+
+# Minimum rotational velocity without moving translational
+min_in_place_vel_th: 0.0
+
+# Have to check what this actually does
+in_place_trans_vel: 0.0
+
+# Translational Accuracy on target
+translational_goal_tolerance: 0.1
+
+# Rotational Accuracy on target
+rotational_goal_tolerance: 0.15
+
+# Enable reaching for soft goal
+reach_for_soft_goal: true
+
+# Translational Accuracy on soft goal
+soft_translational_goal_tolerance: 3.0
+
+# Waiting threshold until soft goal is activated
+soft_goal_wait_threshold: 30
+
+# Controller settings
+k_prop: 4.0
+k_damp: 3.5
+
+# Update rate of trajectory controller
+ctrl_rate: 10.0
+
+# Virtual Mass
+virtual_mass: 0.75
+
+# Correct the rotation in direction of driving until this distance to the goal
+rotation_correction_threshold: 0.5
+
+#Force robot to keep orientation in driving direction
+force_tangential_orientation: true
+
+# allow_rotation_in_place
+allow_rotation_in_place: true
+
+# rotate_in_place_expansion_thresh
+force_rotate_in_place_expansion_thresh: 0.2
+
+# rotate_in_place_angular_thresh
+force_rotate_in_place_angular_thresh: 0.5
+
+# -----------------------------------------------------------------
+# eband_trajectory_controller_params for moving goal
+# -----------------------------------------------------------------
+
+# Activate moving goal option
+catch_moving_goal: false
+
+# Moving goal velocity increase factor
+moving_goal_vel_increase_factor: 1.2
+
+# Moving goal distance upper threshhold
+moving_goal_dist_upper_thresh: 0.2
+
+# Moving goal distance lower threshhold
+moving_goal_dist_lower_thresh: 0.01
+
+# -----------------------------------------------------------------
+# eband_trajectory_controller_params for smoothing
+# -----------------------------------------------------------------
+#
+# Activate smoothing option at start and end
+smoothing_enabled: true
+
+# Iteration border for smoothing at start. This means that the velocity wil be smoothed during this number of iterations after start
+start_smoothing_border: 10
+
+# Start smoothing at the end of the trajectory if the distance  of to the goal trespasses this threshhold
+stop_smoothing_dist_to_goal: 0.1
+
+# -----------------------------------------------------------------
+# eband params carlike
+# -----------------------------------------------------------------
+
+# Activate carlike option to drive using ackermann kinematics
+carlike: false
+
+# Distance from robot center to axles for carlike option only. This parameter is robot-specific
+center_ax_dist: 0.228
+
+# The maximal steering angle for ackermann-cinematics for carlike option only
+max_steering_angle: 0.7
+
+# gain for ackermann forces (carlike motion favoured)
+eband_turning_circle_force_gain: 1.5
+
+# -----------------------------------------------------------------
+# eband params classic
+# -----------------------------------------------------------------
+
+# Gap is just filled if this tolerance is trespassed
+fill_tolerance: 0.3
+
+# Bubble will be removed if this tolerance is trespassed
+remove_tolerance: 0.8
+
+# Minimum relative overlap two bubbles must have to be treated as connected
+eband_min_relative_bubble_overlap: 0.7
+
+# internal forces between two bubbles are only calc. if their distance is bigger than this lower bound
+eband_tiny_bubble_distance: 0.01
+
+# lower bound for bubble expansion. below this bound bubble is considered as in collision
+eband_tiny_bubble_expansion: 0.01
+
+# gain for internal forces (Elasticity of Band)
+eband_internal_force_gain: 1.0
+
+# gain for external forces (Penalty on low distance to obstacles)
+eband_external_force_gain: 2.0
+
+# gain for external forces when the robot is allmost in collision
+eband_external_force_near_obtacle_gain: 2.0
+
+# maximal number of iteration steps during optimization of band
+num_iterations_eband_optimization: 3
+
+# maximum depth for recursive approximation to constrain computational burden
+eband_equilibrium_approx_max_recursion_depth: 4
+
+# percentage of old force for which a new force is considered significant when higher as this value
+eband_equilibrium_relative_overshoot: 0.75
+
+# lower bound for absolute value of force below which it is treated as insignificant (no recursive approximation)
+eband_significant_force_lower_bound: 0.15
+
+# use this parameter to set the number of bubbles. if it is equal to 0, it is choosen automatically
+number_of_bubbles: 1
+
+# -----------------------------------------------------------------
+# eband visualization params
+# -----------------------------------------------------------------
+
+# Lifetime of visualization markers
+marker_lifetime: 0.5
+
+# -----------------------------------------------------------------
+# collision_velocity_filer_carlike_params
+# -----------------------------------------------------------------
+
+# costmap parameter source
+costmap_parameter_source: "/local_costmap_node/costmap"
+
+# influence radius
+influence_radius: 1.5
+
+# stop threshold
+stop_threshold: 0.18
+
+
+#trajectory following params
+#make sure that trjFlag is enabled and the trjFollowingMeasure is greater zero
+
+#enables the ability to follow a given trajectory made by the trajectory_global_planner
+trjFlag: false #default false
+
+#enables the robot to get its orientation from the trajectory (normalized quaternion needed)
+trjOrientation: false #default false
+
+#necessary for the following feature, determines the robot behavior
+trjFollowingMeasure: 0.75 #default 0.75
+
+#determines the following tollerance
+trjTollerance: 0.01 #default 0.01
+
+#allows or forbid a global replanning e. g. if the trajectory is temporally blocked, no trjFlag needed
+allow_global_replanning: false #default true
+
+#allows or forbid a local replanning
+use_local_replanning: true #default false
+
+drive_residual_band: true
+
+min_dist_to_last_feasible_bubble: 1.0
+
+orientation_in_driving_direction: false
+
+# In combination with [allow_global_replanning; false, use_local_replanning: true] this parameter decides in case the
+# robots path is blocked to wait for the results of the recovery mode or to ask directly for a new global plan
+# !! if set to true, make sure you have a recovery mode enabled !!
+wait_for_recovery: true

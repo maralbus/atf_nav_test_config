@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>atf_nav_test_people</name>
+  <version>0.0.0</version>
+  <description>The atf_nav_test_people package, e.g. person_of_interest_filter</description>
+
+  <license>private</license>
+
+  <maintainer email="marcel.albus@ipa.fraunhofer.de">Marcel Albus</maintainer>
+  <maintainer email="marcel.albus@ipa.fraunhofer.de">Marcel Albus</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>emotion_detection</exec_depend>
+  <exec_depend>cob_perception_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>tf2_geometry_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+
+</package>

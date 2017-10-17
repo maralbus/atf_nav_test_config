@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="msh_people" type="person_of_interest_filter.py" name="person_of_interest_filter" output="screen">
+        <rosparam command="load" file="$(find msh_people)/config/poi.yaml"/>
+    </node>
+</launch>

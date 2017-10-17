@@ -1,0 +1,5 @@
+station: [-0.0, -0.0, 0.0]
+max_trans_dist_station:  2.0
+max_rot_dist_station: 1.0
+max_trans_dist_transform: 1.0
+max_rot_dist_transform: 0.3

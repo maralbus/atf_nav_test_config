@@ -1,0 +1,65 @@
+# Motion noise per meter in x-direction
+dQxxPerM: 0.005 # in m^2
+
+# Motion noise per meter in y-direction
+dQyyPerM: 0.005 # in m^2
+
+# Motion noise per meter in theta-direction
+dQaaPerRad: 0.009 # in rad^2
+
+# Motion noise: angular tranlational covariance per meter
+dQaxyPerM: 0.0
+
+# Motion noise: translational angular covariance per rad
+dQxyaPerRad: 0.0
+
+# Minumum value for covariance matrix in translatory directions
+dMinCovTrans: 0.0025 # in m^2
+
+# Minumum value for covariance matrix in rotational (yaw-)-direction
+dMinCovRot: 0.001 # in rad
+
+# Minumum value of covariance matrix (sigma_xx and sigma_yy) for allowing measurement updates when robot is not moving
+dMinCovTransStandStill: 0.005 # in m^2
+
+# Minumum value of covariance matrix (sigma_thetatheta) for allowing measurement updates when robot is not moving
+dMinCovRotStandStill: 0.002 # in rad^2
+
+# Enabling measurement update step
+bEnableMeasUpdate: true
+
+# Enabling line-features in measurement update (bEnableMeasUpdate must be enabled)
+bEnableLines: true
+
+# Enabling point-features in measurement update (bEnableMeasUpdate must be enabled)
+bEnablePoints: true
+
+# Enabling pose-features in measurement update (bEnableMeasUpdate must be enabled)
+bEnablePoses: true
+
+#Decides whether the association confidence influences the feature measurment noise
+bUseAssociationConfidences: false
+
+# Threshold for overall confidence of a set of point-features to be considered in the measurement update of current time step
+dThresOverallConfidencePoint: 0.0
+
+# Threshold for overall confidence of a set of line-features to be considered in the measurement update of current time step
+dThresOverallConfidenceLine: 0.0
+
+# Threshold for overall confidence of a set of pose-features to be considered in the measurement update of current time step
+dThresOverallConfidencePose: 0.0
+
+# Threshold for maximum allowed time gap between current time and lookup time of odometry data
+dMaxOdomLookupDelay: 0.2 # in seconds
+
+# Threshold for maximum allowed time gap in prediction between two time steps
+dMaxOdomdT: 2.0 # in seconds
+
+# Threshold for maximum allowed travelled translation distance in prediction between two time steps
+dMaxOdomDeltaDist: 0.2 # in m
+
+# Threshold for maximum allowed travelled rotational distance in prediction between two time steps
+dMaxOdomDeltaRot: 0.2 # in rad
+
+# Enable Visualization
+bEnableVisualization: true

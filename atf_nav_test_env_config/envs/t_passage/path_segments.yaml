@@ -1,0 +1,35 @@
+control points:
+  - id: cp 1
+    location: [0.01000262796878815, 2.216547727584839e-07]
+    transition: [robot]
+  - id: cp 2
+    location: [5.000009536743164, 4.898756742477417e-07]
+    transition: [robot]
+  - id: cp 3
+    location: [5, -4.900000095367432]
+    transition: [robot]
+  - id: cp 4
+    location: [9.990005016326904, -4.470348358154297e-08]
+    transition: [robot]
+path segments:
+  - id: ps 5
+    type: bezier
+    width: 1
+    target_velocity: -1
+    directed: false
+    control points: [cp 1, cp 2]
+    users: [robot]
+  - id: ps 6
+    type: bezier
+    width: 1
+    target_velocity: -1
+    directed: false
+    control points: [cp 2, cp 3]
+    users: [robot]
+  - id: ps 7
+    type: bezier
+    width: 1
+    target_velocity: -1
+    directed: false
+    control points: [cp 2, cp 4]
+    users: [robot]

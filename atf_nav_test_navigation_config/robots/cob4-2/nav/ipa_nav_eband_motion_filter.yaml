@@ -1,0 +1,15 @@
+# The time interval to wait for a nonzero twist command to be published after a zero command has been received
+zero_waittime: 0.2 # in seconds
+
+# The number of zero twist commands to be skipped within wait_time_until_zero_cmd interval
+zero_count_limit: 4
+
+# The maximal allowed linear acceleration
+max_acc_lin: 0.4
+
+# The maximal allowed angular acceleration
+max_acc_ang: 0.2
+
+# the loop rate
+loop_rate: 100.0 # in Hz
+

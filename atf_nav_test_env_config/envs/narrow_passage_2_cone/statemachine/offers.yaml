@@ -1,0 +1,4 @@
+products:
+    # ProductNumber, Text, Price, NavGoal
+    - [1794129, 'eine Festplatte mit riesigem 2 TB Speicher', 75.00, 10]
+    - [1794129, 'eine Festplatte mit mickrigem 1 kB Speicher', 999.99, 10]
