@@ -1,3 +1,4 @@
+echo 'Copying files\n'
 echo -ne '\033[92m####                                       (10%)\033[0m\r'
 cp -R atf_nav_test_bringup/launch $(rospack find msh_bringup)/
 echo -ne '\033[92m########                                   (20%)\033[0m\r'
