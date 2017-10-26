@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="robot" default="cob4-2"/>
+
+    <!-- start rviz with configuration -->
+    <node pkg="rviz" type="rviz" name="$(anon rviz)" args="-d $(find msh_robot_config)/robots/$(arg robot)/$(arg robot).rviz" respawn="false" output="screen" />
+
+</launch>

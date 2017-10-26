@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="robot"              default="$(optenv ROBOT !!NO_ROBOT_SET!!)"/>
+    <arg name="robot_env"          value="narrow_passage_2_cone"/>
+    <arg name="pkg_robot_config"   default="$(find cob_default_robot_config)"/>
+    <arg name="pkg_env_config"     default="$(find msh_env_config)"/>
+    <arg name="pkg_nav_config"     default="$(find msh_navigation_config)"/>
+    <arg name="pkg_nav_env_config" default="$(find msh_navigation_config)"/>
+    <arg name="pkg_gazebo_worlds"  default="$(find cob_gazebo_worlds)"/>
+    <!--NICHT "$(arg pkg_gazebo_worlds)/worlds/empty.world" für "world_name" benutzen!-->
+    <arg name="world_name"         default="worlds/empty.world"/>
+    <arg name="initial_config"     default="-x 1.5 -y -0.0 -R 0.0 -P 0.0 -Y 0.0"/> <!-- spawn at charger position -->
+
+    <!--arg name="gui" default="true"/-->
+    <!--running simulation of gazebo headless-->
+    <arg name="gui" default="false"/>
+    <arg name="start_sm" default="false" />
+    <arg name="start_emotion_detection" default="false" />
+
+    <arg name="sim" value="true"/>
+    <arg name="fake_gui" value="true"/>
+
+    <arg name="call_staff_number_overwrite" default=""/>
+    <param name="/call_staff/number_overwrite" type="string" value="$(arg call_staff_number_overwrite)"/>
+
+    <!-- start simulation -->
+    <include file="$(find cob_bringup_sim)/launch/robot.launch">
+        <arg name="robot" value="$(arg robot)"/>
+        <arg name="robot_env" value="$(arg robot_env)"/>
+        <arg name="pkg_robot_config" value="$(arg pkg_robot_config)"/>
+        <arg name="pkg_env_config" value="$(arg pkg_env_config)"/>
+        <arg name="pkg_gazebo_worlds" value="$(arg pkg_gazebo_worlds)"/>
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="initial_config" value="$(arg initial_config)"/>
+        <arg name="gui" value="$(arg gui)"/>
+    </include>
+
+    <!-- upload objects>
+    <include file="$(arg pkg_env_config)/upload_object_locations.launch">
+        <arg name="robot_env" value="$(arg robot_env)"/>
+    </include-->
+
+    <!--include file="$(arg pkg_env_config)/upload_navigation_goals.launch">
+        <arg name="robot_env" value="$(arg robot_env)" />
+    </include-->
+
+    <!-- spawn station_charger object -->
+    <!--node name="spawn_charger" pkg="cob_bringup_sim" type="spawn_object.py" args="chargers" output="screen"/-->
+
+    <!-- start application -->
+    <include file="$(find msh_bringup)/launch/application.xml" >
+        <arg name="robot" value="$(arg robot)"/>
+        <arg name="robot_env" value="$(arg robot_env)"/>
+        <arg name="pkg_env_config" value="$(arg pkg_env_config)"/>
+        <arg name="pkg_nav_config" value="$(arg pkg_nav_config)"/>
+        <arg name="pkg_nav_env_config" value="$(arg pkg_nav_env_config)"/>
+        <arg name="sim" value="$(arg sim)"/>
+        <arg name="fake_gui" value="$(arg fake_gui)"/>
+        <arg name="start_sm" value="$(arg start_sm)"/>
+        <arg name="start_emotion_detection" value="$(arg start_emotion_detection)"/>
+    </include>
+
+</launch>

@@ -1,0 +1,86 @@
+# Parameter for weighting the distance between two lines for associating lines.
+dAssLineWeightDist: 5.0
+
+# Maximum allowed distance between two lines for associating lines.
+dAssLineMaxDist: 0.5
+
+# Parameter for weighting the angular difference between two lines for associating lines.
+dAssLineWeightAng: 2.0
+
+# Maximum allowed angular difference between two lines for associating lines.
+dAssLineMaxAng: 0.3
+
+# Parameter for weighting the overlap region of two lines for associating lines.
+dAssLineWeigthOverlap: 0.3
+
+# Tolerated overlapping distance for associating lines.
+dAssLineDistOverlap: 0.05
+    
+# Angular range of the sensor.
+dMaxAngularSensorRange: 270
+    
+# Distance Range of the sensor.
+dMaxDistanceSensorRange: 8.0
+    
+# Maximum allowed Mahalanobis Distance for association of line features.
+dMaxMahaDistLine: 7.0
+
+# Maximum allowed Mahalanobis Distance for association of point features.
+dMaxMahaDistPoint: 5.0
+
+# Maximum allowed Mahalanobis Distance for association of pose features.
+dMaxMahaDistPose: 2.0
+
+# Enables the evaluation of an ID based association through its mahalanobis distance.
+bEvaluateIDAssociationByMahaDist: false
+
+# Boolean which enables the association by sampling.
+bEnableSampling: false
+    
+# Maximum distance range for generating samples regarding the x-direction.
+dMaxSamplingRangeX: 0.4
+    
+# Maximum distance range for generating samples regarding the y-direction.
+dMaxSamplingRangeY: 0.4
+    
+# Maximum angle range for generating samples in theta-direction.
+dMaxSamplingRangeTheta: 0.52
+    
+# Number of sample points in x-direction.
+iSamplePointsX: 5
+    
+# Number of sample points in y-direction.
+iSamplePointsY: 5
+    
+# Number of sample points in theta-direction.
+iSamplePointsTheta: 5
+
+#Enables the prefiltering of lines for computational efficiency.
+bFilterLines: true
+
+#Enables the prefiltering of points for computational efficiency. !!!Functionality not implemented for points atm!!!
+bFilterPoints: false
+
+#Enables the prefiltering of poses for computational efficiency.
+bFilterPoses: true
+
+#Enables the evaluation of ID based associations with the Mahalanobis Distance. Associations which don't are above the MaxMahaDist are discarded.
+bEvaluateIDAssociationByMahaDist: false
+
+# Enable Visualization
+bEnableVisualization: true
+   
+# Enables a global nearest neighbor search instead of the default single nearest neighbor search for lines (should not be used atm)
+bGlobalNearestNeighborSearchLines: false
+
+# Enables a global nearest neighbor search instead of the default single nearest neighbor search fpr points
+bGlobalNearestNeighborSearchPoints: true
+
+# Enables a global nearest neighbor search instead of the default single nearest neighbor search poses
+bGlobalNearestNeighborSearchPoses: true
+
+# Buffer size of subscriber to measured feature topic
+feature_meas_buffer_size: 3
+
+# Buffer size of subscriber to feature map topic
+feature_map_buffer_size: 6

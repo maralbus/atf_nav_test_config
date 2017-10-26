@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="sim" default="false" />
+    <arg unless="$(arg sim)" name="output-prefix" default="-o $(env HOME)/bags/msh" />
+    <arg if="$(arg sim)" name="output-prefix" default="-o msh" /> <!-- goes into ~/.ros/msh_DATE_TIME.bag -->
+
+    <node pkg="rosbag" type="record" name="logger" args="$(arg output-prefix) /joint_states_throttle /robot_status /say/goal /say/result /request_customer_intention/goal /request_customer_intention/result /request_customer_decision/goal /request_customer_decision/result /search/goal /search/result /call_staff/goal /call_staff/result /move_base/goal /move_base/result /rosout_agg /diagnostics_agg" output="screen"/>
+
+    <node pkg="topic_tools" type="throttle" name="joint_states_throttle" args="messages /joint_states 1.0 /joint_states_throttle"/>
+
+    <!--node pkg="rosbag" type="record" name="logger_debug" args="$(arg output-prefix)_debug /base/joint_states /base/odometry_controller/odometry /base/twist_controller/wheel_commands" output="screen"/-->
+
+</launch>

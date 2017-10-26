@@ -1,0 +1,18 @@
+source_id: "laserline"
+features:
+  - id: 0
+    source: [0.0841892, 1.06581, 0.0]
+    target: [0.092109, -1.06848, 0.0]
+    description: imark_line_laserline_1
+  - id: 1
+    source: [0.0830045, 1.03433, 0.0]
+    target: [9.91507, 0.974365, 0.0]
+    description: imark_line_laserline_3
+  - id: 2
+    source: [9.91507, 0.974365, 0.0]
+    target: [9.90048, -1.08353, 0.0]
+    description: imark_line_laserline_4
+  - id: 3
+    source: [9.88289, -1.08371, 0.0]
+    target: [0.104284, -1.09356, 0.0]
+    description: imark_line_laserline_5

@@ -1,0 +1,14 @@
+control points:
+  - id: cp 10
+    location: [0, 0]
+    transition: []
+  - id: cp 11
+    location: [20, 0]
+    transition: []
+path segments:
+  - id: ps 12
+    type: bezier
+    width: 1
+    directed: false
+    control points: [cp 10, cp 11]
+    users: [human, robot]

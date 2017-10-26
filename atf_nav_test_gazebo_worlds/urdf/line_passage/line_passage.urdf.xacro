@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="line_passage">
+
+  <xacro:include filename="$(find cob_gazebo_worlds)/urdf/common.xacro" />
+
+  <xacro:macro name="line_passage" params="name">
+
+    <link name="world"/>
+
+    <link name="world_link">
+      <xacro:default_inertial/>
+      <visual>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <mesh filename="package://msh_gazebo_worlds/Media/models/line_passage.STL" />
+        </geometry>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" />
+        <geometry>
+          <mesh filename="package://msh_gazebo_worlds/Media/models/line_passage.STL" />
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="world_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <parent link="world" />
+      <child link="world_link" />
+    </joint>
+
+  </xacro:macro>
+
+  <xacro:line_passage name="line_passage" />
+
+</robot>

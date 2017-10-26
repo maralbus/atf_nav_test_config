@@ -1,0 +1,95 @@
+# Should the algorithm wait until the line map is available.
+wait_for_lines: false
+
+# The maximal range of the laser scanner (in [m]). If a laser point reaches this distance the point will be erased.
+max_laser_range: 28.0
+
+# The maximal distance (in [m]) for a point from an extracted line to be still part of the line segment.
+max_dist_from_line: 0.1
+
+# The maximal allowed distance (in [m]) between two points to be in the same area.
+max_dist_next_point: 0.7
+
+# The tolerance in [m] for a point to be inside of an area (distance tolerance from the rectangular area borders).
+allowed_tolerance: 0.05
+
+# The minimum number of points in an area. Areas with less points will be erased.
+min_num_points_in_area: 20
+
+# The occupancy probability for a grid cells in % if the cell is marked as occupied. Needs to be between 0,...,100.
+grid_probability_occupied: 90
+
+# The occupancy probability for a grid cells in % if the cell is marked as free space. Needs to be between 0,...,100.
+grid_probability_free: 10
+
+# The minimum squared variance in x-direction to set the covariance matrix of measurement after association step.
+min_variance_x: 0.01
+
+# The maximum squared variance in x-direction to set the covariance matrix of measurement after association step.
+max_variance_x: 0.45
+
+# The minimum squared variance in y-direction to set the covariance matrix of measurement after association step.
+min_variance_y: 0.01
+
+# The maximum squared variance in y-direction to set the covariance matrix of measurement after association step.
+max_variance_y: 0.45
+
+# The minimum squared variance in rotation to set the covariance matrix of measurement after association step.
+min_variance_r: 0.1
+
+# The maximum squared variance in rotation to set the covariance matrix of measurement after association step.
+max_variance_r: 0.3
+
+# The number of maximum iterations of the ICP.
+ICP_max_iterations: 20
+
+# How many points need to be matched before the measurements and assumptions will be published.
+min_associated_points: 20
+
+# How many samples shoud be generated in x. Each sample covers the range of max_shift_in_x.
+# 0 means no extra sampling. 1 means one sampling in -x and one sampling in +x.
+sample_in_x: 0
+
+# How many samples shoud be generated in y. Each sample covers the range of max_shift_in_y.
+# 0 means no extra sampling. 1 means one sampling in -y and one sampling in +y.
+sample_in_y: 0
+
+# The range for the maximal shift in x direction to correct the position of the robot.
+max_shift_in_x: 0.8
+
+# The range for the maximal shift in y direction to correct the position of the robot.
+max_shift_in_y: 0.8
+
+# The factor to weight the variance of translation depending on the distance robot to local area.
+# The ratio of the weight is formed with weight_match_trans.
+weight_dist_trans: 1
+
+# The factor to weight the variance of rotation depending on the distance robot to local area.
+# The ratio of the weight is formed with weight_match_rot.
+weight_dist_rot: 2
+
+# The factor to weight the variance of translation depending on matching quality (depends on weight_method).
+# The ratio of the weight is formed with weight_dist_trans.
+weight_match_trans: 3
+
+# The factor to weight the variance of rotation depending on matching quality (depends on weight_method).
+# The ratio of the weight is formed with weight_dist_rot.
+weight_match_rot: 1
+
+# Parameter for the map frame as a string.
+map_frame: map
+
+# Parameter for the robot frame as a string.
+robot_frame: base_footprint
+
+# Parameter to enable the visual outputs for debugging.
+pub_debug: false
+
+# Parameter for the minimum ICP score (sum of squared distances to a perfect match) per point.
+min_ICP_score_per_point: 0.001
+
+# Parameter for which method should be used for weighting the transformation result.
+#   Method 0: The weight will be done by how many points were matched.
+#   Method 1: The weight will be done by the ICP score (sum of squared distance to a perfect match).
+weight_method: 0
+

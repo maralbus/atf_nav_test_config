@@ -1,0 +1,17 @@
+###################################
+#People
+###################################
+person1:
+  model: man_walking
+  model_type: urdf
+  position: [7, 0, 0]
+  orientation: [0, 0, 3.14159265358979323]
+
+###################################
+#Station Charger
+###################################
+#station_charger:
+#  model: station_charger
+#  model_type: sdf
+#  position: [-0.0, -0.0, 0]  # from station_localizer.yaml
+#  orientation: [0, 0, 3.1415]
