@@ -1,6 +1,7 @@
 # ATF Nav Test Config
 [![GitHub commit activity the past week, 4 weeks, yea](https://img.shields.io/github/commit-activity/4w/ipa-flg-ma/atf_nav_test_config.svg)](https://github.com/ipa-flg-ma/atf_nav_test_config)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/ipa-flg-ma/atf_nav_test_config.svg)](https://github.com/ipa-flg-ma/atf_nav_test_config)
+
 Config and environment files for `atf_navtests` to run the simulation using [ATF](https://github.com/ipa-fmw/atf)
 
 ## Usage
