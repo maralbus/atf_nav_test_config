@@ -1,0 +1,128 @@
+# boolean to switch line detection on/off
+bLineDetect: true
+
+#The maximal scan range. Scans further away than this range or further away than range_max will be ignored. [m]
+MaxScanRange: 100.0
+
+#Selects method to extract lines.
+bUseSplitAndMerge: true   
+
+# The maximal square distance between points in line segments. Split and merge function only uses this value as a hint that gap could be present [m²]
+MaxSqDistInSeg: 0.04
+
+# maximal square length of a line segment [m²]
+MaxSqSegLen: 400.0
+
+# minimal square length of a line segment [m²]
+MinSqSegLen: 1.5
+
+# maximal eigenvalue size of covariance matrix as a linearity threshold. The smaller this value the higher the linear correlation of the points
+MaxCovOrth: 0.01
+
+# minimal number of points per line segment
+MinNumPointInSeg: 10
+
+# maximal distance of a point to the straight line of current line segment, in order to be added directly to the segment [m²]
+MaxDistPointToLineSeg: 0.04
+
+#Maximum angle between two segments that are merged [degree]
+MaxMergeAngle: 8
+ 
+#Maximum orthogonal offset of two segments that are merged [m]
+MaxMergeOrthoDist: 0.1
+ 
+#Gap ratio of a segment = largest distance of two succeeding points in segment / segment length. Used to filter out invalid segments
+MaxGapRatio: 0.5
+
+
+  
+#Boolean to switch corner detection on/off
+bCornerDetect: true
+
+#Threshold that determines when an angle between two segments describes a corner [deg]  
+dMinCornerAngle: 80
+  
+#Threshold that determines when an angle between two segments describes a corner [deg]
+dMaxCornerAngle: 100
+  
+#Intersection point of two segments musn't be further away from each segment's end point than this value [m]
+dMaxCornerDist: 0.2
+
+#First threshold for minimum line length of lines to build a corner: Both line segments must be longer than this threshold [m]
+dMinCornerSegLen1: 0.1
+
+#2nd threshold for minimum line length of lines to build a corner: At least one line segment must be longer than this threshold [m]
+dMinCornerSegLen2: 0.2
+
+#[deg]
+MinAngleTrusted: 10 
+
+
+
+
+# boolean to switch circle detection on/off
+bCircleDetect: false
+
+#Maximum distance of point to circle used by ransac to make point count as on-lier [m]  
+dMaxDist: 0.01
+   
+#Maximum variance of distances of on-liers [m²]
+dMaxVar: 0.001
+ 
+#Minimum distance between detected circles. Zero means that circles can touch each other [m]
+dMinDist: 0 
+   
+#Only detect circles with at least this radius [m]
+dMinRadius: 0.1
+  
+#Only detect circles with at most this radius [m]
+dMaxRadius: 0.3 
+
+#Only detect circles with at least this number of on-liers
+nMinHits: 25
+
+#How many times per point should ransac guess circle parameters
+nGuesses: 1
+  
+#How wide is the detected circle segment. E.g. 180° means half a circle can be seen [deg]
+dMinOpeningAngle: 30
+ 
+#Variance of scanner range measurements [m]
+dSigmaRange: 0.02
+
+#Variance of scanner angles [rad] 
+dSigmaAngle: 0.0001  
+ 
+#Step size for numerical differentiation used to assemble jacobians [m]
+dDifferentiationDelta: 0.02
+
+#If true, covariance matrices will be set to default values
+bUseDefaultCovariances: true   
+
+#If true, two points will be used for differentiation. This will increase accuracy but also workload
+bUseTwoPointDifferentiation: false 
+
+ 
+
+# boolean to switch laser marker detection on/off
+bReflMarkerDetect: true
+
+# radius of reflector marker [m]
+dReflMarkerRadius: 0.024749
+
+# the minimum intensity at which reflMarker are detected
+dReflMarkerMinIntensity: 250.0
+
+# the maximum intensity at which reflMarker are detected
+dReflMarkerMaxIntensity: 10000.0
+
+# minimum number of hits with high intensity for a marker measurement to be valid
+nMinReflectiveHits: 1
+
+
+
+# Enable Visualization
+bEnableVisualization: true
+
+# Buffer size of subscriber to scan msg (should be set to the number of laser scanners which publish to scan msg)
+scan_buffer_size: 3

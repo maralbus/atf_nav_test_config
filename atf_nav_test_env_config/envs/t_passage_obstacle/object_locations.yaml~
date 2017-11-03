@@ -1,8 +1,0 @@
-###################################
-#Station Charger
-###################################
-station_charger:
-  model: station_charger
-  model_type: sdf
-  position: [-0.0, -0.0, 0]  # from station_localizer.yaml
-  orientation: [0, 0, 3.1415]

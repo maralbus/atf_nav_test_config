@@ -1,0 +1,36 @@
+########################################################################################################################
+#                                       Navigation to and from path segments
+########################################################################################################################
+
+# Specify the number of closest path segments to connect to the goal and start point
+number_of_considered_path_segments: 6   # default: 3
+
+# Specify how much more expensive the route not travelled on a path segment should be
+non_path_segment_cost_increase_factor: 30.0  # default: 5.0
+
+# Specify the number of access points on the previously picked path segments should be included in the graph search
+distance_of_path_segment_access_points: 1.5 # default: 1.0
+
+
+########################################################################################################################
+#                                           Navigation on trajektories
+########################################################################################################################
+
+# Specifies the max cost increase factor for path segments width (small width will have a higher cost) 
+# -> minimum would be 1.0 = no increase
+max_ps_width_cost_increase_factor: 3.0  # default: 2.0
+
+# Specifies the min width of a path segment to which the costs will increase
+min_ps_width_threshhold: 0.6  # default: 0.6
+
+# Specify the max width of a path segment to which costs will no longer decrease with increasing width
+max_ps_width_threshhold: 3.0  # default: 3.0
+
+# Allowing free planning if goal is within distance threshold
+allow_free_planning_within_dist_threshold: true # default: false
+
+# max goal distance enabling free planning
+free_planning_dist_threshold: 5.0 # default: 5.0
+
+# Allow free planning if planning on path segments fails (using navfn)
+allow_backup_free_planning: false
