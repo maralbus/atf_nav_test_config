@@ -8,6 +8,7 @@ The following `config`-values have to be corrected, according to empirical valid
 [ ] narrow_passage_2_cone
 [x] t_passage
 [x] t_passage_obstacle
+
 -------------------------------------------------------------------------------
 
 Hint: [x] marks done

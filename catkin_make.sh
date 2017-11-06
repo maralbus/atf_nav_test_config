@@ -1,0 +1,1 @@
+catkin_make atf_atf_nav_test
