@@ -62,7 +62,7 @@ class StartTestcases:
             shutil.copy2(self.config_path + '/atf_nav_test_testcases/' + self.args.launch + '/application.launch',
                          self.goal_path + '/launch')
 
-            print '\033[92m' + 'Copying \'config\'...' + '\033[0m'
+            print '\033[92m' + 'Copying \'config\' files...' + '\033[0m'
 
             # copy 'config' folder to desired destination
             dir_util.copy_tree(self.config_path + '/atf_nav_test_testcases/' + self.args.launch + '/config',

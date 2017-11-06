@@ -19,6 +19,23 @@ The listed files will be copied to the right directory for `msh`- and `cob`-conf
 
 **Dependencies**: ROS package has to be installed, otherwise `rospack find ` won't work.
 
+The `start_testcases.py` starts the automated testframework with the specified testconfig, as a commandline argument, i.e.
+```shell
+./start_testcases -l line_passage
+```
+A `help` call is available for `start_testcases.py`, and if there is a wrong user input, the mislead user will be guided towards the righteous input.
+
+The possible testcases are:
+- line_passage
+- line_passage_obstacle
+- line_passage_person_moving
+- line_passage_spawn_obstacle
+- narrow_passage_2_cone
+- t_passage
+- t_passage_obstacle
+
+Each testcase first copies the needed `application.launch` into the `atf_nav_test/launch` folder, and then the necessary `config`-files, in which the used metrics and min/max-values are stored.
+
 
 ## Editing
 Only edit the files in the `atf_nav_test_config` directory and copy them using `copy.sh`. This will ensure that there is only one file directory that needs editing, and not dozens of different files in each directory.
@@ -118,6 +135,7 @@ are **included**! The `robot_status_retriever.py` is necessary to complete the w
     </node>
 </group>
 ```
+
 ### `'std::out_of_range' what(): map::at`
 The errorlog shown below occurs when the robot can't find a path on the global costmap.
 
@@ -147,5 +165,9 @@ The modified files `path_segments.yaml` or `line_maps/laserline.yaml` have to be
 
 
 ### History
+**V2.0**
+- added `start_testcases.py`
+- now all necessary files are copied into the `atf_nav_test` folder
+
 **V1.0:**
 - first push
