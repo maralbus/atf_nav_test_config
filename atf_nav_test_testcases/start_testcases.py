@@ -8,7 +8,7 @@ Created on Nov 6, 2017
 @author: flg-ma
 @attention: Auto Testcases using ATF
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 1.0.0
+@version: 1.1.0
 """
 
 import os
@@ -69,8 +69,9 @@ class StartTestcases:
                                self.goal_path + '/config')
             print '=' * 80
 
-            # TODO: system is trying to use 'catkin_make' on execution path... not possible
-            os.system(self.goal_path + '/../../catkin_make.sh')
+            os.chdir(self.goal_path + '/../../')
+            # start ATF
+            os.system('catkin_make atf_atf_nav_test')
 
 
         elif (self.args.launch == None) or (self.args.launch not in self.testcases):
