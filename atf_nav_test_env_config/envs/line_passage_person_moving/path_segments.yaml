@@ -1,15 +1,25 @@
 control points:
-  - id: cp 12
-    location: [0.1000015661120415, 7.897615432739258e-07]
+  - id: cp 14
+    location: [0.2000005841255188, -5.550682544708252e-07]
     transition: [robot]
-  - id: cp 13
-    location: [9.800000369548798, 8.121132850646973e-07]
+  - id: cp 15
+    location: [4.999999046325684, -3.725290298461914e-07]
+    transition: [robot]
+  - id: cp 16
+    location: [9.699999809265137, -4.32133674621582e-07]
     transition: [robot]
 path segments:
-  - id: ps 13
+  - id: ps 14
     type: bezier
     width: 1
     target_velocity: -1
     directed: false
-    control points: [cp 12, cp 13]
+    control points: [cp 14, cp 15]
+    users: [robot]
+  - id: ps 15
+    type: bezier
+    width: 1
+    target_velocity: -1
+    directed: false
+    control points: [cp 15, cp 16]
     users: [robot]

@@ -1,0 +1,102 @@
+# Enables the feature extraction by virtual scan generation and feature extraction methods from laser scan processing
+bGetFeatureMapByVirtualScanning: true
+
+#######################################################
+### Virtual Scanning Params ###########################
+#######################################################
+
+# Angle increment for rotating virtual scanner position in place [rad]
+scannerAngleIncrement: 1.0471975 #1/3*M_PI
+
+# Maxiumum number of angle icrements for rotatin virtual scanner position in place []
+maxScannerAngleIncrements: 6
+
+# Translational stepsize on grid (rcStep * grid_resolution = step size in meters) []
+rcStep: 5
+
+# Maximum distance between source/target point of a line to another line for merging lines [m]
+maxDistPointToLine: 0.2
+
+# ;axium angular differnce of a line to another line for merging lines [deg]
+maxAngleDiff: 15
+
+
+
+# boolean to switch line detection on/off
+bLineDetect: true
+
+#The maximal scan range. Scans further away than this range or further away than range_max will be ignored. [m]
+MaxScanRange: 100.0
+
+#Selects method to extract lines.
+bUseSplitAndMerge: true   
+
+# The maximal square distance between points in line segments. Split and merge function only uses this value as a hint that gap could be present [m²]
+MaxSqDistInSeg: 0.04
+
+# maximal square length of a line segment [m²]
+MaxSqSegLen: 400.0
+
+# minimal square length of a line segment [m²]
+MinSqSegLen: 0.01
+
+# maximal eigenvalue size of covariance matrix as a linearity threshold. The smaller this value the higher the linear correlation of the points
+MaxCovOrth: 0.1
+
+# minimal number of points per line segment
+MinNumPointInSeg: 6
+
+# maximal distance of a point to the straight line of current line segment, in order to be added directly to the segment [m²]
+MaxDistPointToLineSeg: 0.15
+
+#Maximum angle between two segments that are merged [degree]
+MaxMergeAngle: 10
+ 
+#Maximum orthogonal offset of two segments that are merged [m]
+MaxMergeOrthoDist: 0.15
+ 
+#Gap ratio of a segment = largest distance of two succeeding points in segment / segment length. Used to filter out invalid segments
+MaxGapRatio: 0.5
+
+#[deg]
+MinAngleTrusted: 10 
+
+
+  
+#Boolean to switch corner detection on/off
+bCornerDetect: true
+
+#Threshold that determines when an angle between two segments describes a corner [deg]  
+dMinCornerAngle: 80
+  
+#Threshold that determines when an angle between two segments describes a corner [deg]
+dMaxCornerAngle: 100
+  
+#Intersection point of two segments musn't be further away from each segment's end point than this value [m]
+dMaxCornerDist: 0.2
+
+#First threshold for minimum line length of lines to build a corner: Both line segments must be longer than this threshold [m]
+dMinCornerSegLen1: 0.05
+
+#2nd threshold for minimum line length of lines to build a corner: At least one line segment must be longer than this threshold [m]
+dMinCornerSegLen2: 0.2
+
+
+ 
+#Variance of scanner range measurements [m]
+dSigmaRange: 0.0
+
+#Variance of scanner angles [rad] 
+dSigmaAngle: 0.0
+ 
+#Step size for numerical differentiation used to assemble jacobians [m]
+dDifferentiationDelta: 1.0
+
+#If true, covariance matrices will be set to default values
+bUseDefaultCovariances: true   
+
+#If true, two points will be used for differentiation. This will increase accuracy but also workload
+bUseTwoPointDifferentiation: false 
+
+# Enable Visualization
+bEnableVisualization: true

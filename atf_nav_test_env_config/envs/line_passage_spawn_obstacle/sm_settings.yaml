@@ -1,0 +1,70 @@
+global:
+    language: german
+    facebook_enabled: false
+
+machines:
+    idle:
+        entertain_duration: 30 #20sec
+        person_detection_initial_timeout: 5.0
+    greeting:
+        check_person_near_timeout: 6.0
+        check_person_timeout: 15.0
+    productsearch:
+        check_person_timeout: 15.0
+    staffsearch:
+        entertain_duration: 20 #20sec
+        qr_authentication_timeout: 300 #5*60
+
+states:
+    voice_ctrl:
+        intention:
+            max_iterations: 3
+            action_exec_timeout: 20 #20sec
+        decision:
+            max_iterations: 3
+            action_exec_timeout: 20 #20sec
+        say:
+            action_exec_timeout: 20 #20sec
+        call:
+            max_iterations: 5
+            ring_timeout: 30 #30sec
+    general:
+        error:
+            error_confirmation_timeout: 180 #3 min
+            error_call_resolve_timeout: 300 #5 min
+            error_call_retry_timeout: 60 #1 min
+        entertain:
+            default_entertain_duration: 30
+            audio_genre: default
+        emotion:
+            light_enabled: true
+            torso_enabled: true
+            head_enabled: false
+            mimic_enabled: true
+        base_position_checker:
+            default_dist_threshold: 3.0 #m
+        productlist:
+            default_timeout: 240 #sec
+        slack:
+            topic: /from_ros_to_slack
+    person_detection:
+        min_score_person_near: 0.28
+
+behaviors:
+    battery:
+        dock:
+            max_dock_attempts: 5
+            pre_nav_goal_position: charger
+            pre_torso_position: home
+            post_torso_position: left
+            station_name: station_charger
+        undock:
+            post_nav_goal_position: charger
+            pre_torso_position: home
+            station_name: station_charger
+
+monitors:
+    battmonitor:
+        min_battery_charge: 10
+    navmonitor:
+        monologs_duration: 30
