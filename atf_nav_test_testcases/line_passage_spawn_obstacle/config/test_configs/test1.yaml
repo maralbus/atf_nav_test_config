@@ -1,6 +1,6 @@
 testblock_nav:
   time:
-    - groundtruth: 20.0
+    - groundtruth: 22.5
       groundtruth_epsilon: 1.0
   goal:
     - topic: /move_base/goal

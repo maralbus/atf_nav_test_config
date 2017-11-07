@@ -46,7 +46,7 @@
     <!--node name="spawn_charger" pkg="cob_bringup_sim" type="spawn_object.py" args="chargers" output="screen"/-->
 
     <!-- move objects (people) -->
-    <node name="move_p1" pkg="cob_bringup_sim" type="move_object.py" args="-m polygon -n person1 -v 0.4 -p '[[8, 0], [3, 0]]' -o 'robot'" output="screen"/>
+    <node name="move_p1" pkg="cob_bringup_sim" type="move_object.py" args="-m polygon -n person1 -v 0.25 -p '[[8, 0], [3, 0]]' -o 'robot'" output="screen"/>
 
     <!-- start application -->
     <include file="$(find msh_bringup)/launch/application.xml" >
