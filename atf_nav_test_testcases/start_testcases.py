@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-# !/usr/bin/python
-
 """
 Created on Nov 6, 2017
 
@@ -15,12 +13,12 @@ import os
 import shutil
 import rospkg
 import argparse
+import time
 from distutils import dir_util
 
 
 class StartTestcases:
     def __init__(self):
-
         self.testcases = ['line_passage',  # 0
                           'line_passage_obstacle',  # 1
                           'line_passage_person_moving',  # 2
@@ -32,22 +30,32 @@ class StartTestcases:
         self.goal_path = self.rospack.get_path('atf_nav_test')
         self.config_path = '/home/flg-ma/git/atf_nav_test_config'
         self.args = self.build_parser().parse_args()
+        self.timeformat = "%Y_%m_%d"
+        # path where the data is saved
+        self.dirpath = 'Data/' + time.strftime(self.timeformat) + '/' + self.args.launch
 
     def build_parser(self):
         parser = argparse.ArgumentParser(description='Start testcases using ATF')
         parser.add_argument('-l', '--launch', help='Name of the testcase, e.g. \'line_passage\'', type=str)
         return parser
 
-    # def copytree(self, src, dst, symlinks=False, ignore=None):
-    #     for item in os.listdir(src):
-    #         s = os.path.join(src, item)
-    #         d = os.path.join(dst, item)
-    #         if os.path.isdir(s):
-    #             shutil.copytree(s, d, symlinks, ignore)
-    #         else:
-    #             shutil.copy2(s, d)
+    def save_files(self, filepath):
+        '''
+        save the output files in the desired filepath
+        :filepath: path where the generated '.yaml' files should be saved
+        :return:
+        '''
+        src_path = '/tmp/atf_nav_test/'
+        dir_util.copy_tree(src=src_path, dst=filepath)
+        print '=' * 80
+        print '\033[92m' + 'Copying output yaml-files' + '\033[0m'
+        print '=' * 80
 
     def main(self):
+        '''
+        main function of the programm
+        :return: --
+        '''
         if self.args.launch != None and self.args.launch in self.testcases:
             for tests in self.testcases:
                 if tests == self.args.launch:
@@ -72,6 +80,9 @@ class StartTestcases:
             os.chdir(self.goal_path + '/../../')
             # start ATF
             os.system('catkin_make atf_atf_nav_test')
+            self.save_files(self.dirpath)
+            print '=' * 80
+            print '=' * 80
 
 
         elif (self.args.launch == None) or (self.args.launch not in self.testcases):
