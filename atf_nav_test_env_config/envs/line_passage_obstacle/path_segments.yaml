@@ -1,12 +1,12 @@
 control points:
   - id: cp 15
-    location: [0.0999995619058609, 1.750887150819835e-07]
+    location: [0.09999929368495941, 2.924353452726791e-07]
     transition: [robot]
   - id: cp 16
-    location: [4.999998092651367, -0.01935169287025928]
+    location: [4.999998092651367, -0.01935179904103279]
     transition: [robot]
   - id: cp 17
-    location: [9.599999904632568, -5.960464477539062e-08]
+    location: [9.800000190734863, -1.490119956315539e-07]
     transition: [robot]
 path segments:
   - id: ps 15
