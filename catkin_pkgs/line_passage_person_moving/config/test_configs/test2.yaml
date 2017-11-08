@@ -1,0 +1,4 @@
+testblock_navigation:
+  time:
+    - groundtruth: 1.0
+      groundtruth_epsilon: 4.0
