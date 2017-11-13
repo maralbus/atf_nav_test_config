@@ -6,7 +6,7 @@ import itertools
 true = True
 false = False
 
-params_all_2 = {
+params_all = {
 		'PID/d': 0.0,
 		'PID/i': 0.0,
 		'PID/p': 1.0,
@@ -114,34 +114,37 @@ dict1 = {'eins': {'values': [1,2]},
 		 'zwei': {'values': [11,22,33]},
 		 'drei': {'values': [111,222]}}
 
-value_count_list = [a['values'].__len__() for a in sorted(dict1.values())]
 
-value_count_dict = {key: value['values'].__len__() for key, value in dict1.iteritems()}
+def create_value_dict(do_param_dict):
+	value_count_list = [a['step'].__len__() for a in sorted(do_param_dict.values())]
+	value_count_dict = {key: value['step'].__len__() for key, value in do_param_dict.iteritems()}
 
-# print value_count_dict
-# print value_count_list
+	key_values_list = []
+	key_possibilities_list = []
 
-key_values_list = []
-key_possibilities_list = []
+	# build list with all possibilities of one 'key' and store it inside another list
+	for key, value in sorted(do_param_dict.iteritems()):
+	 	for j in xrange(value_count_dict[key]):
+	 		key_possibilities_list.append([key, value['step'][j]])
+	 	key_values_list.append(key_possibilities_list)
+	 	key_possibilities_list = []
 
-# build list with all possibilities of one 'key' and store it inside another list
-for key, value in sorted(dict1.iteritems()):
- 	for j in xrange(value_count_dict[key]):
- 		key_possibilities_list.append([key, value['values'][j]])
- 	key_values_list.append(key_possibilities_list)
- 	key_possibilities_list = []
+	cartesian_product_list = []
 
-cartesian_product_list = []
+	# multiply every single 'key'-list of 'key_values_list' with each other to create every possibilty as 'key'-'value' pair
+	# 'cartesian product'
+	for element in itertools.product(*key_values_list):
+		cartesian_product_list.append(element)
 
-# multiply every single 'key'-list of 'key_values_list' with each other to create every possibilty as 'key'-'value' pair
-# 'cartesian product'
-for element in itertools.product(*key_values_list):
-	cartesian_product_list.append(element)
+	# create 'key'-'value' dictionaries inside list
+	output_list = [{data[0]: data[1] for data in data_tuples} for data_tuples in cartesian_product_list]
 
-# create 'key'-'value' dictionaries inside list
-output_list = [{data[0]: data[1] for data in data_tuples} for data_tuples in cartesian_product_list]
+#	for i in output_list:
+#		print i
 
-for i in output_list:
-	print i
-print '=' * 80
-print output_list
+	print '=' * 80
+	print 'Dictionarie length:', output_list.__len__()
+	print '=' * 80
+	return output_list
+
+print create_value_dict(do_params)[0]

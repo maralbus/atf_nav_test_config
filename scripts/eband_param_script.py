@@ -12,6 +12,7 @@ Created on Nov 7, 2017
 import yaml
 import shutil
 import rospkg
+import itertools
 
 true = True
 false = False
@@ -21,29 +22,54 @@ class EbandParams(object):
     """docstring for EbandParams"""
 
     def __init__(self):
+        # self.do_params = {
+        #     # Maximum linear velocity
+        #     'max_vel_lin': 1.0,
+        #     # Maximum rotational velocity
+        #     'max_vel_th': 0.5,
+        #     # Damp maximal translational acceleration
+        #     'max_translational_acceleration': 0.4,
+        #     # Damp maximal rotational acceleration
+        #     'max_rotational_acceleration': 0.2,
+        #     # Scaling factor for veocity calculation
+        #     'scaled_radius_factor': 4.0,
+        #     # Controller settings
+        #     'k_prop': 4.0,
+        #     'k_damp': 3.5,
+        #     # Activate smoothing option at start and end
+        #     'smoothing_enabled': true,
+        #     # Minimum relative overlap two bubbles must have to be treated as connected
+        #     'eband_min_relative_bubble_overlap': 0.7,
+        #     'drive_residual_band': true,
+        #     # -----------------------------------------------------------------
+        #     # select kinematics: {omnidirectional, differential}
+        #     # -----------------------------------------------------------------
+        #     'kinematics_string': 'omnidirectional'
+        # }
         self.do_params = {
             # Maximum linear velocity
-            'max_vel_lin': 1.0,
+            'max_vel_lin': {'value': [0.0, 1.0, 2.0], 'step': [0.75, 1.25]},
             # Maximum rotational velocity
-            'max_vel_th': 0.5,
+            'max_vel_th': {'value': [0.0, 0.5, 2.0], 'step': [0.2, 1.5]},
             # Damp maximal translational acceleration
-            'max_translational_acceleration': 0.4,
+            'max_translational_acceleration': {'value': [0.0, 0.4, 1.5], 'step': [0.3, 1.0]},
             # Damp maximal rotational acceleration
-            'max_rotational_acceleration': 0.2,
+            'max_rotational_acceleration': {'value': [0.0, 0.2, 1.0], 'step': [0.4, 0.8]},
             # Scaling factor for veocity calculation
-            'scaled_radius_factor': 4.0,
+            'scaled_radius_factor': {'value': [0.0, 4.0, 7.0], 'step': [2.0, 6.0]},
             # Controller settings
-            'k_prop': 4.0,
-            'k_damp': 3.5,
+            'k_prop': {'value': [0.0, 4.0, 10.0], 'step': [2.0, 7.0]},
+            'k_damp': {'value': [0.0, 3.5, 10.0], 'step': [2.0, 7.0]},
             # Activate smoothing option at start and end
-            'smoothing_enabled': true,
+            'smoothing_enabled': {'value': [true, true, false], 'step': [true, false]},
             # Minimum relative overlap two bubbles must have to be treated as connected
-            'eband_min_relative_bubble_overlap': 0.7,
-            'drive_residual_band': false,
+            'eband_min_relative_bubble_overlap': {'value': [0.5, 0.7, 1.0], 'step': [0.5, 0.9]},
+            'drive_residual_band': {'value': [true, true, false], 'step': [true, false]},
             # -----------------------------------------------------------------
-            # select kinematics: {omnidirectional, differential, carlike}
+            # select kinematics: {omnidirectional, differential}
             # -----------------------------------------------------------------
-            'kinematics_string': 'omnidirectional'
+            'kinematics_string': {'value': ['omnidirectional', 'omnidirectional', 'differential'],
+                                  'step': ['omnidirectional', 'differential']}
         }
 
         self.maybe_params = {
@@ -56,34 +82,36 @@ class EbandParams(object):
             'min_dist_to_last_feasible_bubble': 1.0
         }
 
-        self.dead_params = {'carlike': False,
-                            'trjOrientation': False,
-                            'eband_equilibrium_approx_max_recursion_depth': 4,
-                            'reach_for_soft_goal': True,
-                            'orientation_in_driving_direction': False,
-                            'use_local_replanning': True,
-                            'eband_equilibrium_relative_overshoot': 0.75,
-                            'eband_significant_force_lower_bound': 0.15,
-                            'force_tangential_orientation': True,
-                            'marker_lifetime': 0.5,
-                            'costmap_parameter_source': '/local_costmap_node/costmap',
-                            'catch_moving_goal': False,
-                            'soft_goal_wait_threshold': 30,
-                            'allow_global_replanning': False,
-                            'trjFollowingMeasure': 0.75,
-                            'trjFlag': False,
-                            'influence_radius': 1.5,
-                            'eband_tiny_bubble_expansion': 0.01,
-                            'rotational_goal_tolerance': 0.15,
-                            'soft_translational_goal_tolerance': 3.0,
-                            'wait_for_recovery': True,
-                            'translational_goal_tolerance': 0.1,
-                            'num_iterations_eband_optimization': 3,
-                            'stop_threshold': 0.18,
-                            'number_of_bubbles': 1,
-                            'remove_tolerance': 0.8,
-                            'fill_tolerance': 0.3,
-                            'trjTollerance': 0.01}
+        self.dead_params = {
+            'carlike': False,
+            'trjOrientation': False,
+            'eband_equilibrium_approx_max_recursion_depth': 4,
+            'reach_for_soft_goal': True,
+            'orientation_in_driving_direction': False,
+            'use_local_replanning': True,
+            'eband_equilibrium_relative_overshoot': 0.75,
+            'eband_significant_force_lower_bound': 0.15,
+            'force_tangential_orientation': True,
+            'marker_lifetime': 0.5,
+            'costmap_parameter_source': '/local_costmap_node/costmap',
+            'catch_moving_goal': False,
+            'soft_goal_wait_threshold': 30,
+            'allow_global_replanning': False,
+            'trjFollowingMeasure': 0.75,
+            'trjFlag': False,
+            'influence_radius': 1.5,
+            'eband_tiny_bubble_expansion': 0.01,
+            'rotational_goal_tolerance': 0.15,
+            'soft_translational_goal_tolerance': 3.0,
+            'wait_for_recovery': True,
+            'translational_goal_tolerance': 0.1,
+            'num_iterations_eband_optimization': 3,
+            'stop_threshold': 0.18,
+            'number_of_bubbles': 1,
+            'remove_tolerance': 0.8,
+            'fill_tolerance': 0.3,
+            'trjTollerance': 0.01
+        }
 
         self.all_params = {
             'PID/d': 0.0,
@@ -152,9 +180,65 @@ class EbandParams(object):
             'virtual_mass': 0.75,
             'wait_for_recovery': false
         }
+
         self.rospack = rospkg.RosPack()  # get path for ROS package
         self.dst_path = self.rospack.get_path('msh_navigation_config')
         self.dst_path = self.dst_path + '/robots/cob4-7/nav'
+
+    def create_value_dict(self, do_param_dict):
+        '''
+        creates a dictionary with every key:value pair with step distance changed
+        i.e. one parameter is changed and all the other params are untouched and from this set a dictionary is created
+        :param do_param_dict: parameter dictionary
+        :return: dictionary with all sets of key:value pairs
+        '''
+        value_count_list = [a['step'].__len__() for a in sorted(do_param_dict.values())]
+        value_count_dict = {key: value['step'].__len__() for key, value in do_param_dict.iteritems()}
+
+        key_values_list = []
+        key_possibilities_list = []
+
+        # build list with all possibilities of one 'key' and store it inside another list
+        for key, value in sorted(do_param_dict.iteritems()):
+            for j in xrange(value_count_dict[key]):
+                key_possibilities_list.append([key, value['step'][j]])
+            key_values_list.append(key_possibilities_list)
+            key_possibilities_list = []
+
+        cartesian_product_list = []
+
+        # multiply every single 'key'-list of 'key_values_list' with each other to create every possibilty as 'key'-'value' pair
+        # 'cartesian product'
+        for element in itertools.product(*key_values_list):
+            cartesian_product_list.append(element)
+
+        # create 'key'-'value' dictionaries inside list
+        output_list = [{data[0]: data[1] for data in data_tuples} for data_tuples in cartesian_product_list]
+
+        #	for i in output_list:
+        #		print i
+
+        print '=' * 80
+        print 'Dictionarie length:', output_list.__len__()
+        print '=' * 80
+
+        counter = 1
+        for dict in output_list:
+            filename = 'move_base_eband_params' + '_' + str(counter) + '.yaml'
+            stream = file(filename, 'w')
+            for key, value in dict.iteritems():
+                # print key, ':', value
+                self.all_params[key] = value
+            # generate 'yaml' file
+            yaml.dump(self.all_params, stream, default_flow_style=False)
+            stream.close()
+            counter += 1
+
+        print '=' * 80
+        print '\'yaml\' generated'
+        print '=' * 80
+
+        return output_list
 
     def change_value(self):
         '''
@@ -214,7 +298,8 @@ class EbandParams(object):
         # print '=' * 100
 
     def main(self):
-        self.change_value()
+        # self.change_value()
+        self.create_value_dict(self.do_params)
 
 
 if __name__ == '__main__':

@@ -22,7 +22,7 @@
     </include>
 
     <!-- for debugging -->
-    <include file="$(find msh_bringup)/launch/rviz.launch"/>
+    <!--include file="$(find msh_bringup)/launch/rviz.launch"/-->
     <!--node pkg="rqt_console" type="rqt_console" name="rqt_console" output="screen"/-->
 
 </launch>
