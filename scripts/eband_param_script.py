@@ -285,7 +285,10 @@ class EbandParams(object):
         stream = file('move_base_eband_params.yaml', 'w')
         for key, value in self.do_params.iteritems():
             # print key, ':', value
-            self.all_params[key] = value
+            if type(value) is dict:
+                self.all_params[key] = value['value'][1]
+            else:
+                self.all_params[key] = value
         # generate 'yaml' file
         yaml.dump(self.all_params, stream, default_flow_style=False)
         print '=' * 100
@@ -298,8 +301,8 @@ class EbandParams(object):
         # print '=' * 100
 
     def main(self):
-        # self.change_value()
-        self.create_value_dict(self.do_params)
+        self.change_value()
+        # self.create_value_dict(self.do_params)
 
 
 if __name__ == '__main__':
