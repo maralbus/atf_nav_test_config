@@ -6,7 +6,7 @@ Created on Nov 6, 2017
 @author: flg-ma
 @attention: Auto Testcases using ATF
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 2.0.0
+@version: 3.0.0
 """
 
 import os
