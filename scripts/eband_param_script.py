@@ -225,7 +225,7 @@ class EbandParams(object):
         counter = 1
         for dict in output_list:
             filename = 'move_base_eband_params' + '_' + str(counter) + '.yaml'
-            stream = file(filename, 'w')
+            stream = file('yaml_files/' + filename, 'w')
             for key, value in dict.iteritems():
                 # print key, ':', value
                 self.all_params[key] = value
