@@ -2,7 +2,7 @@
 [![GitHub commit activity the past week, 4 weeks, yea](https://img.shields.io/github/commit-activity/4w/ipa-flg-ma/atf_nav_test_config.svg)](https://github.com/ipa-flg-ma/atf_nav_test_config)
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/ipa-flg-ma/atf_nav_test_config.svg)](https://github.com/ipa-flg-ma/atf_nav_test_config)
 
-Config and environment files for `atf_navtests` to run the simulation using [ATF](https://github.com/ipa-fmw/atf)
+Config and environment files for `atf_nav_tests` to run the simulation using [ATF](https://github.com/ipa-fmw/atf)
 
 ## Usage
 Run the `copy.sh` bash script. It will show a green progress bar:
@@ -19,13 +19,12 @@ The listed files will be copied to the right directory for `msh`- and `cob`-conf
 
 **Dependencies**: ROS package has to be installed, otherwise `rospack find ` won't work.
 
-The `start_testcases.py` starts the automated testframework with the specified testconfig, as a commandline argument, i.e.
+The `start_testcases.py` starts the automated testframework and starts all possible testcases.
 ```shell
-./start_testcases -l line_passage
+./start_testcases
 ```
-A `help` call is available for `start_testcases.py`, and if there is a wrong user input, the mislead user will be guided towards the righteous input.
 
-The possible testcases are:
+The testcases are:
 - line_passage
 - line_passage_obstacle
 - line_passage_person_moving
@@ -34,7 +33,7 @@ The possible testcases are:
 - t_passage
 - t_passage_obstacle
 
-Each testcase first copies the needed `application.launch` into the `atf_nav_test/launch` folder, and then the necessary `config`-files, in which the used metrics and min/max-values are stored.
+Each testcase starts the corresponding `atf_nav_pkg` ([Link](https://github.com/ipa-flg-ma/atf_nav_pkgs)) using the commandline to execute `catkin_make atf_$ATF_PKG$`.
 
 
 ## Editing
@@ -42,10 +41,9 @@ Only edit the files in the `atf_nav_test_config` directory and copy them using `
 
 | Pros | Cons |
 |:-----|:-----|
-|+ easy to create new `launch` files |- call to `copy.sh` is needed everytime |
 |+ easy to setup new environments |- bash script has to be updated everytime a new package is created |
 |+ much easier workflow |- CI not easily possible |
-|+ direct github repo for all files | |
+|+ direct github repo for all files |- call to `copy.sh` is needed everytime |
 |+ files are needed in different directories are easily distributed | |
 
 ## Timing
