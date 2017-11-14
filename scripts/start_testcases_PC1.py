@@ -60,9 +60,8 @@ class StartTestcases:
         print '=' * 80
 
     def cpy_atf_generated_yaml_to_dst(self, yaml_name):
-        yaml_pth = self.atf_yaml_generated_pth + '/' + yaml_name
         # copy the 'yaml' files from the atf directory into the config folder for ATF
-        shutil.copy2(src=yaml_pth, dst=self.move_base_eband_param_path)
+        shutil.copy2(src=yaml_name, dst=self.move_base_eband_param_path)
 
     def get_eband_param_configs(self):
         '''
@@ -102,6 +101,7 @@ class StartTestcases:
         for i in pcl:
             print '=' * 80
             print i.__len__(), 'config files will be tested.'
+            passed_tests_counter = i.__len__() * (self.args.number_of_pc - 1)
             print '=' * 80
             break
 
@@ -114,7 +114,7 @@ class StartTestcases:
             for case in self.testcases:
                 atf_pkg_path = self.rospack.get_path(case)
                 # path where the data is saved
-                data_save_pth = 'Data/' + time.strftime(self.timeformat) + '/' + case
+                data_save_pth = 'Data/' + time.strftime(self.timeformat) + '/' + case + '_' + str(passed_tests_counter)
                 print '=' * 80
                 print '\033[92m' + 'The specified testcase is:', case, '\033[0m'
                 print '=' * 80
@@ -131,6 +131,8 @@ class StartTestcases:
 
                 print '\033[93m' + '=' * 80 + '\033[0m'
                 print '=' * 80
+            passed_tests_counter += 1
+            
         endtime = time.time()
         print '\033[93m' + 'Time needed: ', (endtime - starttime) / 60, '[min]' + '\033[0m'
         print '=' * 80
