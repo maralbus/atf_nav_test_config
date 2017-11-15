@@ -6,7 +6,7 @@ Created on Nov 6, 2017
 @author: flg-ma
 @attention: Auto Testcases using ATF
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 3.0.0
+@version: 3.0.1
 """
 
 import os
@@ -124,7 +124,8 @@ class StartTestcases:
                 startstring = 'catkin_make atf_' + case
                 # start ATF
                 os.system(startstring)
-
+                # kill all gazebo tasks
+                os.system('kill $(ps aux | grep \'[g]azebo\' | awk \'{print $2}\')')
 
                 # save the generated 'yaml' files from the metrics and the 'move_base_eband_params.yaml' file
                 print '=' * 80
@@ -134,7 +135,7 @@ class StartTestcases:
 
                 # purge 'log' files for 'catkin_make ...'
                 os.chdir('/home/flg-ma/.ros')
-                os.system('rosclean purge')
+                os.system('rosclean purge -y')
                 print '\033[93m' + '=' * 80 + '\033[0m'
                 print '=' * 80
             passed_tests_counter += 1
