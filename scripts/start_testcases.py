@@ -6,7 +6,7 @@ Created on Nov 6, 2017
 @author: flg-ma
 @attention: Auto Testcases using ATF
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 3.0.1
+@version: 3.1.0
 """
 
 import os
@@ -35,7 +35,7 @@ class StartTestcases:
         self.timeformat = "%Y_%m_%d"
         self.pc_count = self.args.pc_count
         self.move_base_eband_param_path = self.rospack.get_path(
-            'ipa_navigation_config') + '/robots/default/nav/move_base_eband_params.yaml'
+            'msh_navigation_config') + '/robots/cob4-2/nav/move_base_eband_params.yaml'
 
     def build_parser(self):
         parser = argparse.ArgumentParser(description='Start testcases using ATF')
@@ -156,5 +156,4 @@ class StartTestcases:
 if __name__ == '__main__':
     st = StartTestcases()
     st.main()
-    # print st.get_eband_param_configs()[0:10]
 pass
