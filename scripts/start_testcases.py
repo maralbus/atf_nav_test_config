@@ -107,7 +107,7 @@ class StartTestcases:
 
         for yaml in pcl[self.args.number_of_pc - 1]:
             print '=' * 80
-            print '\033[92m' + 'Copy the \'atf_yaml\' to the \'ipa_navigation\'-pkg' + '\033[0m'
+            print '\033[92m' + 'Copy the \'atf_yaml\' to the \'msh_navigation_config\'-pkg' + '\033[0m'
             self.cpy_atf_generated_yaml_to_dst(yaml_name=yaml)
             print '=' * 80
 
