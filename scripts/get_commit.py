@@ -6,7 +6,7 @@ Created on Nov 16, 2017
 @author: flg-ma
 @attention: get commit string of directory
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 1.0.0
+@version: 1.1.0
 """
 
 import os
@@ -77,12 +77,12 @@ class GetCommit:
             final_output = p.communicate()[0]
             commits[pth] = final_output[:-1]
             print final_output
-            self.compare(commits)
             # p1 = subprocess.Popen("git log", stdout=subprocess.PIPE, shell=True)
             # p2 = subprocess.Popen("grep 'commit'", stdin=p1.stdout, stdout=subprocess.PIPE, shell=True)
             # p3 = subprocess.Popen("awk '{print $2}'", stdin=p2.stdout, stdout=subprocess.PIPE, shell=True)
             # p4 = subprocess.Popen("head -n 1", stdin=p3.stdout, shell=True)
             # final_output = p4.communicate()[0]
+        self.compare(commits)
 
     def set_commit(self):
         for pth in self.directories:
@@ -97,8 +97,12 @@ class GetCommit:
             print '=' * 80
             print 'True'
             print '=' * 80
+        else:
+            print '=' * 80
+            print 'False'
+            print '=' * 80
 
 
 if __name__ == '__main__':
     gc = GetCommit()
-    gc.set_commit()
+    gc.get_commit()
