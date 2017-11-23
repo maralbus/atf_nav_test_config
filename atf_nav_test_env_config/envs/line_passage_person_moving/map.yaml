@@ -1,6 +1,6 @@
 image: line_passage_person_moving.png
 resolution: 0.01
-origin: [-0.000000, -2.20000, 0.000000]
+origin: [-0.200000, -2.20000, 0.000000]
 negate: 0
 occupied_thresh: 0.8
 free_thresh: 0.1
