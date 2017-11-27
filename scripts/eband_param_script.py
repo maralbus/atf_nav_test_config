@@ -302,7 +302,6 @@ class EbandParams(object):
 
     def main(self):
         self.change_value()
-        
         # self.create_value_dict(self.do_params)
 
 
