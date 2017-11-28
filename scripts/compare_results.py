@@ -6,7 +6,7 @@ Created on Nov 22, 2017
 @author: flg-ma
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 3.0.0
+@version: 3.1.0
 """
 
 import yaml
@@ -86,8 +86,9 @@ class CompareResults:
         df = pd.DataFrame([], columns=columns)  # setup dataframe with the columns above
         for items in self.testcases:
             data_dict[items] = {}  # create a dict inside a dict for all testcases
+        counter = 0
         for folder in self.directories:
-            testcase_number = int(filter(str.isdigit, folder))  # number of testcase is saved
+            testcase_number = int(filter(str.isdigit, folder))  # number of tdataframeestcase is saved
             if 'narrow' in folder:
                 # save testcase name from folder name without number
                 testcase_name = folder[: -(len(str(testcase_number)))]
@@ -135,6 +136,11 @@ class CompareResults:
                         'time': None}
                 df = df.append(data, ignore_index=True)  # append data to dataframe
                 data_dict[testcase_name][testcase_number] = None
+            # increase counter
+            counter += 1
+            #
+            if counter % 20 == 0:
+                print 'Directories saved: ' + str(counter) + ' / ' + str(self.directories.__len__())
 
         df = df.pivot(index='testcase', columns='test_number', values='bool')  # create the desired table output
 
@@ -159,18 +165,34 @@ class CompareResults:
         :param dataframe: pandas dataframe with the heatmap data
         :return: -
         '''
-        fig = plt.figure(1, figsize=(35.0, 10.0))
+        fig = plt.figure(1, figsize=(self.directories.__len__() / 20.0, self.directories.__len__() / 90.0))
+        # fig = plt.figure(1, figsize=(200.0, 50.0))
         sns.set()  # setup seaborn
         # create heatmap
-        ax = sns.heatmap(dataframe, linewidths=.2, cbar=False,
+        ax = sns.heatmap(dataframe, linewidths=.3, cbar=False,
                          cmap=mpl.colors.ListedColormap(['red', 'yellow', 'green']), square=True)
+        plt.xticks(rotation=90)
         # bugfix for the 'bbox_inches=tight' layout, otherwise the label will be cut away
-        plt.title('$\quad$', fontsize=25)
+        plt.title('$\quad$', fontsize=60)
+        # plt.title('$\quad$', fontsize=35)
         plt.xlabel('Testcase number', fontsize=15)
         plt.ylabel('Testcase', fontsize=15)
         self.plot_rectangle(figure=fig, axis=ax)
-        plt.savefig(self.pth + 'Test.pdf', bbox_inches='tight')
-        plt.show()  # show heatmap
+        plt.savefig(self.pth + 'Heatmap.pdf', bbox_inches='tight')
+        # plt.show()  # show heatmap
+
+    def drop_threshold(self, threshold, dataframe):
+        counter = 0
+        # bool values in dataframe are stored as float
+        for column in dataframe:
+            for value in dataframe[column]:
+                counter += value
+            if counter < threshold:
+                dataframe = dataframe.drop([column], axis=1)
+            counter = 0
+
+        return dataframe
+
 
     def plot_rectangle(self, figure, axis):
         '''
@@ -180,13 +202,18 @@ class CompareResults:
         :return: -
         '''
 
-        box1 = TextArea(" True: \n False:", textprops=dict(color="k", size=10))
+        box1 = TextArea(" True: \n False: \n NaN: ", textprops=dict(color="k", size=10))
 
-        box2 = DrawingArea(20, 27.5, 0, 0)
-        el1 = Rectangle((5, 15), width=10, height=10, angle=0, fc="g")
-        el2 = Rectangle((5, 2.5), width=10, height=10, angle=0, fc="r")
+        # box2 = DrawingArea(20, 27.5, 0, 0)
+        # el1 = Rectangle((5, 15), width=10, height=10, angle=0, fc="g")
+        # el2 = Rectangle((5, 2.5), width=10, height=10, angle=0, fc="r")
+        box2 = DrawingArea(20, 45, 0, 0)
+        el1 = Rectangle((5, 30), width=10, height=10, angle=0, fc="g")
+        el2 = Rectangle((5, 18.5), width=10, height=10, angle=0, fc="r")
+        el3 = Rectangle((5, 7), width=10, height=10, angle=0, fc='#d3d3d3')
         box2.add_artist(el1)
         box2.add_artist(el2)
+        box2.add_artist(el3)
 
         box = HPacker(children=[box1, box2],
                       align="center",
@@ -205,8 +232,7 @@ class CompareResults:
         figure.subplots_adjust(top=0.8)
 
     def main(self):
-
-        self.create_heatmap(self.read_yaml())
+        self.create_heatmap(self.drop_threshold(threshold=1, dataframe=self.read_yaml()))
         # self.create_heatmap(self.read_yaml())
 
 
