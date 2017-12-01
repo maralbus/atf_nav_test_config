@@ -6,7 +6,7 @@ Created on Nov 22, 2017
 @author: flg-ma
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 3.1.0
+@version: 4.1.0
 """
 
 import yaml
@@ -21,16 +21,28 @@ from matplotlib.patches import Rectangle
 from matplotlib.offsetbox import AnchoredOffsetbox, TextArea, DrawingArea, HPacker
 
 
-class Goal:
-    DATA = 0
-
-
 class CompareResults:
     def __init__(self):
-        self.pth = '/home/flg-ma/Test/'  # filepath where the generated 'yaml'-directories are saved
+        # self.pth = '/home/flg-ma/Test/'  # filepath where the generated 'yaml'-directories are saved
+        print '=' * 100
+        try:
+            self.pth = raw_input('Please enter Path to generated testcase output (e.g: \'/home/flg-ma/Test/\'): ')
+            print 'Collecting directories in given path...'
+            self.directories = os.walk(self.pth).next()[1]
+        except StopIteration:  # catch error when there is no valid directory given
+            exit('The directory path does not exist')
+
+        print '=' * 100
+
+        try:
+            self.threshold = int(raw_input(
+                'Please enter threshold to drop results with less successful tests than given threshold: '))  # threshold for 'self.drop_threshold' func
+        except (NameError, ValueError) as e:  # catch wrong integer input
+            exit(e)
+
+        print '=' * 100
         self.yaml_directory = 'results_yaml'  # output 'yaml'-directory
         self.yaml_name = 'ts0_c0_r0_e0_0.yaml'  # output 'yaml'-name
-        self.directories = os.walk(self.pth).next()[1]
         # testcases for ATF
         self.testcases = ['line_passage',  # 0
                           'line_passage_obstacle',  # 1
@@ -88,17 +100,24 @@ class CompareResults:
             data_dict[items] = {}  # create a dict inside a dict for all testcases
         counter = 0
         for folder in self.directories:
-            testcase_number = int(filter(str.isdigit, folder))  # number of tdataframeestcase is saved
-            if 'narrow' in folder:
+            try:  # if the dataname includes no number...
+                except_flag = False
+                testcase_number = int(filter(str.isdigit, folder))  # number of testcase is saved
+            except ValueError as e:
+                except_flag = True
+                print 'No number in testcase found, assuming only one test was made...'
+            if ('narrow' in folder) and (not except_flag) and (testcase_number != 2):
                 # save testcase name from folder name without number
                 testcase_name = folder[: -(len(str(testcase_number)))]
                 # narrow_passage_2_cone would save the '2' from the name as number --> not needed
                 testcase_number = int(str(testcase_number)[1:])
-            else:
+            elif not except_flag and not ('narrow' in folder):
                 # save testcase name from folder name without number when it's not 'narrow_passage_2_cone'
                 testcase_name = folder[: -(len(str(testcase_number)) + 1)]
+            else:
+                testcase_number = 0  # ... zero is saved as number
+                testcase_name = folder
 
-            # create filepath where the 'yaml'-file is stored
             filepath = self.pth + folder + '/' + self.yaml_directory + '/' + self.yaml_name
             if os.path.exists(filepath):  # save the data from the 'yaml' if there is an output file
                 stream = file(filepath, 'r')  # open filestream for yaml
@@ -157,6 +176,7 @@ class CompareResults:
             df = df.rename(index={cases: formatted_testcases[i]})
             i += 1
         print df.head(10)  # print the firs 'n' numbers of the table
+        print '=' * 100
         return df  # returns the dataframe
 
     def create_heatmap(self, dataframe):
@@ -165,12 +185,18 @@ class CompareResults:
         :param dataframe: pandas dataframe with the heatmap data
         :return: -
         '''
-        fig = plt.figure(1, figsize=(self.directories.__len__() / 20.0, self.directories.__len__() / 90.0))
+        # fig = plt.figure(1, figsize=(self.directories.__len__() / 20.0, self.directories.__len__() / 90.0)) # stupid
+        # fig = plt.figure(1, figsize=(dataframe.columns.__len__() / 3.0, dataframe.columns.__len__() / 7.0)) # more line output
+        x_width = (dataframe.columns.__len__() / 3.0) if (dataframe.columns.__len__() / 3.0) > 7.0 else 7.0
+        y_height = (dataframe.columns.__len__() / 7.0) if (dataframe.columns.__len__() / 7.0) > 3.0 else 3.0
+        fig = plt.figure(1, figsize=(x_width, y_height))
+        # fig = plt.figure(1, figsize=(7.0, 3.0)) # one line output
         # fig = plt.figure(1, figsize=(200.0, 50.0))
         sns.set()  # setup seaborn
         # create heatmap
         ax = sns.heatmap(dataframe, linewidths=.3, cbar=False,
-                         cmap=mpl.colors.ListedColormap(['red', 'yellow', 'green']), square=True)
+                         cmap=mpl.colors.ListedColormap(['red', 'yellow', 'green']), square=True, annot=False, vmax=1.0,
+                         vmin=0.0)
         plt.xticks(rotation=90)
         # bugfix for the 'bbox_inches=tight' layout, otherwise the label will be cut away
         plt.title('$\quad$', fontsize=60)
@@ -182,17 +208,22 @@ class CompareResults:
         # plt.show()  # show heatmap
 
     def drop_threshold(self, threshold, dataframe):
+        '''
+        drops the columns when the number of 'True'-bool parameters (given as float) are below the threshold
+        the dataframe contains only the bool values (stored as float)
+        :param threshold: number below which the columns of the dataframe is dropped
+        :param dataframe: dataframe to drop column
+        :return: dataframe with less columns
+        '''
         counter = 0
         # bool values in dataframe are stored as float
-        for column in dataframe:
-            for value in dataframe[column]:
-                counter += value
-            if counter < threshold:
-                dataframe = dataframe.drop([column], axis=1)
-            counter = 0
-
+        for column in dataframe:  # go through each column
+            for value in dataframe[column]:  # get values in each column
+                counter += value  # add all values
+            if counter < threshold:  # compare with threshold
+                dataframe = dataframe.drop([column], axis=1)  # drop if below threshold
+            counter = 0  # reset counter
         return dataframe
-
 
     def plot_rectangle(self, figure, axis):
         '''
@@ -228,12 +259,11 @@ class CompareResults:
                                          )
 
         axis.add_artist(anchored_box)
-
         figure.subplots_adjust(top=0.8)
 
     def main(self):
-        self.create_heatmap(self.drop_threshold(threshold=1, dataframe=self.read_yaml()))
-        # self.create_heatmap(self.read_yaml())
+        self.create_heatmap(self.drop_threshold(threshold=self.threshold, dataframe=self.read_yaml()))
+        print '\033[92m' + '=' * 41 + ' Created Heatmap ' + '=' * 41 + '\033[0m'
 
 
 if __name__ == '__main__':
