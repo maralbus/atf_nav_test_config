@@ -301,8 +301,8 @@ class EbandParams(object):
         # print '=' * 100
 
     def main(self):
-        # self.change_value()
-        self.create_value_dict(self.do_params)
+        self.change_value()
+        # self.create_value_dict(self.do_params)
 
 
 if __name__ == '__main__':

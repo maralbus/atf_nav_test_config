@@ -9,6 +9,7 @@ echo -ne '\033[92m################                           (40%)\033[0m\r'
 cp -R atf_nav_test_gazebo_worlds/Media/models $(rospack find msh_gazebo_worlds)/Media/
 echo -ne '\033[92m####################                       (50%)\033[0m\r'
 cp -R atf_nav_test_gazebo_worlds/urdf $(rospack find msh_gazebo_worlds)/
+cp -R atf_nav_test_gazebo_worlds/worlds $(rospack find msh_gazebo_worlds)/
 echo -ne '\033[92m########################                   (60%)\033[0m\r'
 cp -R atf_nav_test_navigation_config/envs $(rospack find msh_navigation_config)/
 echo -ne '\033[92m############################               (70%)\033[0m\r'

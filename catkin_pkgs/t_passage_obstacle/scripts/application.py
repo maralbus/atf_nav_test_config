@@ -34,7 +34,7 @@ class Application:
         if "standalone" == sys.argv[1]:
             filepath = self.rospack.get_path('msh_bringup') + '/launch/' + sys.argv[2] + '.launch'
         else:
-            filepath = self.rospack.get_path('msh_bringup') + '/launch/' + self.testcases[3] + '.launch'
+            filepath = self.rospack.get_path('msh_bringup') + '/launch/' + self.testcases[6] + '.launch'
         print '=' * len(filepath)
         print filepath
         print '=' * len(filepath)

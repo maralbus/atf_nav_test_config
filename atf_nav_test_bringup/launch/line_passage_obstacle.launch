@@ -9,7 +9,7 @@
     <arg name="pkg_nav_env_config" default="$(find msh_navigation_config)"/>
     <arg name="pkg_gazebo_worlds"  default="$(find cob_gazebo_worlds)"/>
     <!--NICHT "$(arg pkg_gazebo_worlds)/worlds/empty.world" für "world_name" benutzen!-->
-    <arg name="world_name"         default="worlds/empty.world"/>
+    <arg name="world_name"         default="$(find msh_gazebo_worlds)/worlds/empty.world"/>
     <arg name="initial_config"     default="-x 1.0 -y -0.0 -R 0.0 -P 0.0 -Y 0.0"/> <!-- spawn at charger position -->
 
     <!--arg name="gui" default="true"/-->

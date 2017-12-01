@@ -124,10 +124,10 @@ def create_value_dict(do_param_dict):
 
 	# build list with all possibilities of one 'key' and store it inside another list
 	for key, value in sorted(do_param_dict.iteritems()):
-	 	for j in xrange(value_count_dict[key]):
-	 		key_possibilities_list.append([key, value['step'][j]])
-	 	key_values_list.append(key_possibilities_list)
-	 	key_possibilities_list = []
+		for j in xrange(value_count_dict[key]):
+			key_possibilities_list.append([key, value['step'][j]])
+		key_values_list.append(key_possibilities_list)
+		key_possibilities_list = []
 
 	cartesian_product_list = []
 
