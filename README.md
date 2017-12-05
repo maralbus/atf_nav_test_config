@@ -62,11 +62,16 @@ Only edit the files in the `atf_nav_test_config` directory and copy them using `
 ## Compare Results
 The `compare_results.py` script takes a path as input argument (you get asked for it... no hurry) and creates a Heatmap- and Errorbar-Plot for the results ATF has generated and where saved using the `start_testcases.py` script.
 
-![ErrorbarPlot](pictures/Errorbar.pdf)
+![ErrorbarPlot](pictures/Errorbar.svg)
+
+--------------------------------------------------------------------------
+
+<img src="pictures/Errorbar.svg" width="500" rotate="90">
+
 
 ---------------------------------------------------------------------------
 
-![HeatmapPlot](pictures/Heatmap_Threshold_1.pdf)
+<img src="pictures/Heatmap_Threshold_2.svg" width="500" rotate="90">
 
 ## Requirements
 To get everything running, you have to install the requirements for python using the `requirements.txt` in the `scripts` folder.
