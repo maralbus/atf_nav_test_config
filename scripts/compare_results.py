@@ -6,7 +6,7 @@ Created on Nov 22, 2017
 @author: flg-ma
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 4.1.0
+@version: 4.2.0
 """
 
 import yaml
@@ -141,18 +141,48 @@ class CompareResults:
                         'bool': testcase_bool,
                         'path_length': data_dict[testcase_name][testcase_number]['testblock_nav']['path_length'][0][
                             'data'],
+                        'path_length_err': abs(
+                            data_dict[testcase_name][testcase_number]['testblock_nav']['path_length'][0][
+                                'groundtruth'] -
+                            data_dict[testcase_name][testcase_number]['testblock_nav']['path_length'][0]['data']),
+                        'path_length_gte': data_dict[testcase_name][testcase_number]['testblock_nav']['path_length'][0][
+                            'groundtruth_epsilon'],
                         'goal': data_dict[testcase_name][testcase_number]['testblock_nav']['goal'][0]['data'],
+                        'goal_err': abs(
+                            data_dict[testcase_name][testcase_number]['testblock_nav']['goal'][0]['groundtruth'] -
+                            data_dict[testcase_name][testcase_number]['testblock_nav']['goal'][0]['data']),
+                        'goal_gte': data_dict[testcase_name][testcase_number]['testblock_nav']['goal'][0][
+                            'groundtruth_epsilon'],
                         'jerk': data_dict[testcase_name][testcase_number]['testblock_nav']['jerk'][0]['data'],
-                        'time': data_dict[testcase_name][testcase_number]['testblock_nav']['time'][0]['data']}
+                        'jerk_err': abs(
+                            data_dict[testcase_name][testcase_number]['testblock_nav']['jerk'][0]['groundtruth'] -
+                            data_dict[testcase_name][testcase_number]['testblock_nav']['jerk'][0]['data']),
+                        'jerk_gte': data_dict[testcase_name][testcase_number]['testblock_nav']['jerk'][0][
+                            'groundtruth_epsilon'],
+                        'time': data_dict[testcase_name][testcase_number]['testblock_nav']['time'][0]['data'],
+                        'time_err': abs(
+                            data_dict[testcase_name][testcase_number]['testblock_nav']['time'][0]['groundtruth'] -
+                            data_dict[testcase_name][testcase_number]['testblock_nav']['time'][0]['data']),
+                        'time_gte': data_dict[testcase_name][testcase_number]['testblock_nav']['time'][0][
+                            'groundtruth_epsilon']}
                 df = df.append(data, ignore_index=True)  # append data to dataframe
                 stream.close()  # close filestream
             else:  # if there is no generated output 'yaml'-file, save only the testcase name and number
                 data = {'testcase': testcase_name,
                         'test_number': testcase_number,
                         'bool': 0.0,
-                        'goal': None,  # set values to 'None'
-                        'jerk': None,
-                        'time': None}
+                        'path_length': np.nan,  # set values to 'np.nan'
+                        'path_length_err': np.nan,
+                        'path_length_gte': np.nan,
+                        'goal': np.nan,
+                        'goal_err': np.nan,
+                        'goal_gte': np.nan,
+                        'jerk': np.nan,
+                        'jerk_err': np.nan,
+                        'jerk_gte': np.nan,
+                        'time': np.nan,
+                        'time_err': np.nan,
+                        'time_gte': np.nan}
                 df = df.append(data, ignore_index=True)  # append data to dataframe
                 data_dict[testcase_name][testcase_number] = None
             # increase counter
@@ -161,6 +191,7 @@ class CompareResults:
             if counter % 20 == 0:
                 print 'Directories saved: ' + str(counter) + ' / ' + str(self.directories.__len__())
 
+        self.dataframe = df.copy()  # save dataframe globally
         df = df.pivot(index='testcase', columns='test_number', values='bool')  # create the desired table output
 
         formatted_testcases = ['Line Passage',
@@ -179,7 +210,7 @@ class CompareResults:
         print '=' * 100
         return df  # returns the dataframe
 
-    def create_heatmap(self, dataframe):
+    def plot_heatmap(self, dataframe):
         '''
         creates a seaborn heatmap with the provided dataframe
         :param dataframe: pandas dataframe with the heatmap data
@@ -192,7 +223,9 @@ class CompareResults:
         fig = plt.figure(1, figsize=(x_width, y_height))
         # fig = plt.figure(1, figsize=(7.0, 3.0)) # one line output
         # fig = plt.figure(1, figsize=(200.0, 50.0))
-        sns.set()  # setup seaborn
+
+        # sns.set()  # setup seaborn
+
         # create heatmap
         ax = sns.heatmap(dataframe, linewidths=.3, cbar=False,
                          cmap=mpl.colors.ListedColormap(['red', 'yellow', 'green']), square=True, annot=False, vmax=1.0,
@@ -261,8 +294,46 @@ class CompareResults:
         axis.add_artist(anchored_box)
         figure.subplots_adjust(top=0.8)
 
+    def plot_error_bar(self):
+
+        df = self.dataframe.copy()
+        df = df.drop(['test_number',
+                      'bool',
+                      'path_length_err',
+                      'path_length_gte',
+                      'goal_err',
+                      'goal_gte',
+                      'jerk_err',
+                      'jerk_gte',
+                      'time_err',
+                      'time_gte'], axis=1)
+        # df = df.rename(columns={'path_length': 'path length'})
+        print df.head(5)
+        print '=' * 80
+        gp = df.groupby(['testcase'])
+
+        # means = gp.mean().rename(index={'line_passage': 'Line Passage',
+        #                                 'line_passage_obstacle': 'Line Passage Obstacle',
+        #                                 'line_passage_person_moving': 'Line Passage Person Moving',
+        #                                 'line_passage_spawn_obstacle': 'Line Passage Spawn Obstacle',
+        #                                 'narrow_passage_2_cone': 'Narrow Passage Two Cone',
+        #                                 't_passage': 'T Passage',
+        #                                 't_passage_obstacle': 'T Passage Obstacle'})
+        means = gp.mean() # first mean, then rename, otherwise no errorbars are shown
+        print means
+
+        fig = plt.figure(2, figsize=(16.0, 10.0))
+        ax1 = fig.add_subplot(411)
+        means.plot.bar(yerr=gp.std(), ax=ax1, error_kw={'elinewidth': 2})
+        # plt.xticks(rotation=45)
+        plt.legend()
+        plt.grid(True)
+        plt.savefig(self.pth + 'Errorbar.pdf', bbox_inches='tight')
+        plt.show()
+
     def main(self):
-        self.create_heatmap(self.drop_threshold(threshold=self.threshold, dataframe=self.read_yaml()))
+        self.plot_heatmap(self.drop_threshold(threshold=self.threshold, dataframe=self.read_yaml()))
+        self.plot_error_bar()
         print '\033[92m' + '=' * 41 + ' Created Heatmap ' + '=' * 41 + '\033[0m'
 
 
