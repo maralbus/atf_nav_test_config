@@ -5,6 +5,7 @@
 Config and environment files for `atf_nav_tests` to run the simulation using [ATF](https://github.com/ipa-fmw/atf)
 
 ## Usage
+### Copy
 Run the `copy.sh` bash script. It will show a green progress bar:
 
 ```
@@ -19,6 +20,7 @@ The listed files will be copied to the right directory for `msh`- and `cob`-conf
 
 **Dependencies**: ROS package has to be installed, otherwise `rospack find ` won't work.
 
+### Start Testcases
 The `start_testcases.py` starts the automated testframework and starts all possible testcases.
 ```shell
 ./start_testcases
@@ -33,8 +35,19 @@ The testcases are:
 - t_passage
 - t_passage_obstacle
 
-Each testcase starts the corresponding `atf_nav_pkg` ([Link](https://github.com/ipa-flg-ma/atf_nav_pkgs)) using the commandline to execute `catkin_make atf_$ATF_PKG$`.
+The script provides some shell commands:
+```shell
+./start_testcases -c 2 -n 1
+```
 
+| Command Line Argument | Description |
+|:----------------------|:------------|
+| -h | help |
+| -c | number of PCs on which the simulation is run --> splits the testcases equally | 
+| -n | number of the PC on which the simulation is run --> starts the corresponding set for this PC |
+
+
+Each testcase starts the corresponding `atf_nav_pkg` ([Link](https://github.com/ipa-flg-ma/atf_nav_pkgs)) using the commandline to execute `catkin_make atf_$ATF_PKG$`.
 
 ## Editing
 Only edit the files in the `atf_nav_test_config` directory and copy them using `copy.sh`. This will ensure that there is only one file directory that needs editing, and not dozens of different files in each directory.
@@ -45,6 +58,23 @@ Only edit the files in the `atf_nav_test_config` directory and copy them using `
 |+ much easier workflow |- CI not easily possible |
 |+ direct github repo for all files |- call to `copy.sh` is needed everytime |
 |+ files are needed in different directories are easily distributed | |
+
+## Compare Results
+The `compare_results.py` script takes a path as input argument (you get asked for it... no hurry) and creates a Heatmap- and Errorbar-Plot for the results ATF has generated and where saved using the `start_testcases.py` script.
+
+![ErrorbarPlot](pictures/Errorbar.pdf)
+
+---------------------------------------------------------------------------
+
+![HeatmapPlot](pictures/Heatmap_Threshold_1.pdf)
+
+## Requirements
+To get everything running, you have to install the requirements for python using the `requirements.txt` in the `scripts` folder.
+```shell
+pip install -r /path/to/requirements.txt
+```
+The scripts are written using those requirements, and will maybe crash if you update any of those (e.g. `matplotlib`.. I tried it and everything crashed, even the IDE).
+
 
 ## Timing
 Best timing for 2 subscribed topics in `application.py` for `goal_metrics`:
