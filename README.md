@@ -66,12 +66,7 @@ The `compare_results.py` script takes a path as input argument (you get asked fo
 
 --------------------------------------------------------------------------
 
-<img src="pictures/Errorbar.svg" width="500" rotate="90">
-
-
----------------------------------------------------------------------------
-
-<img src="pictures/Heatmap_Threshold_2.svg" width="500" rotate="90">
+![HeatmapPlot](pictures/Heatmap_Threshold_2.svg)
 
 ## Requirements
 To get everything running, you have to install the requirements for python using the `requirements.txt` in the `scripts` folder.
