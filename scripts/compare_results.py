@@ -229,7 +229,7 @@ class CompareResults:
         # fig = plt.figure(1, figsize=(self.directories.__len__() / 20.0, self.directories.__len__() / 90.0)) # stupid
         # fig = plt.figure(1, figsize=(dataframe.columns.__len__() / 3.0, dataframe.columns.__len__() / 7.0)) # more line output
 
-        for n in xrange(0, dataframe_list.__len__()):
+        for n in xrange(1, dataframe_list.__len__()):
             x_width = (dataframe_list[n].columns.__len__() / 3.0) if (dataframe_list[
                                                                           n].columns.__len__() / 3.0) > 7.0 else 7.0
             y_height = (dataframe_list[n].columns.__len__() / 7.0) if (dataframe_list[
@@ -341,12 +341,14 @@ class CompareResults:
         #                                 't_passage': 'T Passage',
         #                                 't_passage_obstacle': 'T Passage Obstacle'})
         means = gp.mean()  # first mean, then rename, otherwise no errorbars are shown
+        print '\033[94m' + 'average values' + '\033[0m'
         print means
         print '=' * 100
+        print '\033[94m' + 'standard deviation' + '\033[0m'
         print gp.std()
 
         scale_factor = 1.4
-        fig = plt.figure(222, figsize=(13.8 * scale_factor, 8.6 * scale_factor))
+        fig = plt.figure(222, figsize=(13.8 * scale_factor, 8.6 * 2.2))
         ax1 = fig.add_subplot(411)
         means.plot.bar(yerr=gp.std(), ax=ax1, error_kw={'elinewidth': 2})
         # plt.xticks(rotation=45)
