@@ -6,7 +6,20 @@ Created on Nov 6, 2017
 @author: flg-ma
 @attention: Auto Testcases using ATF
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 3.1.0
+@version: 3.2.0
+
+#############################################################################################
+
+History:
+- v3.2.0: added start point for config files as commandline argument
+- v3.1.0: updated eband_param_path
+- v3.0.1: kill all 'gazebo' tasks, and purge '.ros' directory via commandline
+- v3.0.0:   * added argument parser
+            * added save files function
+            * added 'get_eband_param_config' function
+            * added automated ATF start using commandline
+- v1.1.0: updated directory structure
+- v1.0.0: first init
 """
 
 import os
@@ -42,6 +55,7 @@ class StartTestcases:
         parser.add_argument('-c', '--pc_count', help='How many PC\'s are used for the simulation?', type=int, default=1)
         parser.add_argument('-n', '--number_of_pc', help='The number of the PC on which the simulation is run',
                             type=int, default=1)
+        parser.add_argument('-s', '--start', help='At which config should the test start?', type=int, default=0)
         return parser
 
     def save_files(self, filepath, testcase):
@@ -77,13 +91,13 @@ class StartTestcases:
 
     def main(self):
         '''
-        main function of the programm
+        main function of the program
         :return: --
         '''
 
         print '=' * 80
         print '=' * 80
-        print '\033[92m' + 'Automated Test Simulation for PC1'
+        print '\033[92m' + 'Automated Test Simulation'
         print 'including the following testcases: '
         for case in self.testcases:
             print '- ', case
@@ -95,9 +109,12 @@ class StartTestcases:
 
         param_config_list = self.get_eband_param_configs()
         pcl = param_config_list
+        # split the complete bunch of configs into the defined amount of pieces (defined in self.args.pc_count)
+        # e.g. N_allconfigs = 2048, pc_count = 2 --> n = N_allconfigs / pc_count = 1024 configs
         pcl = [pcl[i:i + (pcl.__len__() / self.args.pc_count)] for i in
                xrange(0, len(pcl), (pcl.__len__() / self.args.pc_count))]
 
+        # output how many configs will be tested
         for i in pcl:
             print '=' * 80
             print i.__len__(), 'config files will be tested.'
@@ -105,7 +122,11 @@ class StartTestcases:
             print '=' * 80
             break
 
-        for yaml in pcl[self.args.number_of_pc - 1]:
+        passed_tests_counter += self.args.start
+
+        # REVIEW: add start number using arg-parser to start at specific testcase, i.e. start at config 202 instead of 0
+        # for yaml in pcl[self.args.number_of_pc - 1]:
+        for yaml in pcl[self.args.number_of_pc - 1][self.args.start:]:
             print '=' * 80
             print '\033[92m' + 'Copy the \'atf_yaml\' to the \'msh_navigation_config\'-pkg' + '\033[0m'
             self.cpy_atf_generated_yaml_to_dst(yaml_name=yaml)
