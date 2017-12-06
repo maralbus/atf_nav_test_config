@@ -124,7 +124,6 @@ class StartTestcases:
 
         passed_tests_counter += self.args.start
 
-        # REVIEW: add start number using arg-parser to start at specific testcase, i.e. start at config 202 instead of 0
         # for yaml in pcl[self.args.number_of_pc - 1]:
         for yaml in pcl[self.args.number_of_pc - 1][self.args.start:]:
             print '=' * 80
