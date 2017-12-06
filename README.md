@@ -54,7 +54,7 @@ The testcases are:
 
 The script provides some shell commands:
 ```shell
-./start_testcases -c 2 -n 1
+./start_testcases -c 2 -n 1 [-s 140]
 ```
 
 | Command Line Argument | Description |
@@ -62,7 +62,7 @@ The script provides some shell commands:
 | -h | help |
 | -c | number of PCs on which the simulation is run --> splits the testcases equally | 
 | -n | number of the PC on which the simulation is run --> starts the corresponding set for this PC |
-
+| -s | start value for config files (i.e. start test at `140` instead of `0` / default: `0`) |
 
 Each testcase starts the corresponding `atf_nav_pkg` ([Link](https://github.com/ipa-flg-ma/atf_nav_pkgs)) using the commandline to execute `catkin_make atf_$ATF_PKG$`.
 
