@@ -7,6 +7,29 @@ Created on Nov 22, 2017
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
 @version: 4.3.0
+
+
+#############################################################################################
+
+History:
+- v4.3.0:   * updated commandline output
+            * create dataframe list to generate all threshold plots in one run
+            * deleted 'threshold' parameter in 'drop_threshold' func because all threshold plots are generated at once
+- v4.2.0: added errorbar plot
+- v4.1.0:   * wrap every input in 'try'-'except' statements
+            * added 'drop_treshold' func
+            * added heatmap commandline output
+            * figuresize now dependent on dataframe length instead of directory length (because of threshold drop func)
+- v3.1.0:   * commandline output when directories are collected
+            * figuresize now dependent on directory length
+            * added rectangles as legend in heatmap plot
+- v3.0.0:   * added comments
+            * renamed dataframe columns for heatmap output
+            * added heatmap plot func
+- v2.0.0:   * updated 'read_yaml' func to collect bool data from testcases
+            * saved yaml dict in dataframe
+            * added 'pivot_test' func
+- v1.0.0: first push
 """
 
 import yaml
@@ -257,17 +280,16 @@ class CompareResults:
             fig.clf()
             # plt.show()  # show heatmap
 
-    def drop_threshold(self, dataframe):
+    def drop_threshold(self, dataframe_bool):
         '''
         drops the columns when the number of 'True'-bool parameters (given as float) are below the threshold
         the dataframe contains only the bool values (stored as float)
-        :param threshold: number below which the columns of the dataframe is dropped
-        :param dataframe: dataframe to drop column
+        :param dataframe_bool: dataframe to drop column
         :return: dataframe list with all the dataframes including less columns
         '''
         dataframe_list = []
         for threshold in xrange(0, 8):
-            df = pd.DataFrame.copy(dataframe)
+            df = pd.DataFrame.copy(dataframe_bool)
             counter = 0
             # bool values in dataframe are stored as float
             for column in df:  # go through each column
@@ -359,7 +381,7 @@ class CompareResults:
         # plt.show()
 
     def main(self):
-        self.plot_heatmap(self.drop_threshold(dataframe=self.read_yaml()))
+        self.plot_heatmap(self.drop_threshold(dataframe_bool=self.read_yaml()))
         self.plot_error_bar()
         print '\033[92m' + '=' * 41 + ' Created Heatmap ' + '=' * 41 + '\033[0m'
 
