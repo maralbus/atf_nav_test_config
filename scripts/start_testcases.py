@@ -26,7 +26,6 @@ import os
 import shutil
 import rospkg
 import argparse
-import time
 from distutils import dir_util
 import time
 import glob
@@ -125,6 +124,7 @@ class StartTestcases:
         passed_tests_counter += self.args.start
 
         # for yaml in pcl[self.args.number_of_pc - 1]:
+        # start configs from commandline argument given start value
         for yaml in pcl[self.args.number_of_pc - 1][self.args.start:]:
             print '=' * 80
             print '\033[92m' + 'Copy the \'atf_yaml\' to the \'msh_navigation_config\'-pkg' + '\033[0m'
