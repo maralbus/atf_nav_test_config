@@ -69,6 +69,7 @@ class SetTimeTrue:
                     yaml.dump(data_dict, stream, default_flow_style=False)
                     stream.close()
         # generated README file to indicate that files have been corrected
+        os.chdir(self.pth)
         os.mknod('SETTIMETRUE.txt')
         stream = file(self.pth + '/SETTIMETRUE.txt', 'w')
         stream.write('Every \'YAML\' in this directory was edited with the \'set_time_true.py\'-script.')
