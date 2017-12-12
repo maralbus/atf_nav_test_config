@@ -6,7 +6,7 @@ Created on Nov 7, 2017
 @author: flg-ma
 @attention: Generate the 'move_base_eband_params.yaml' automatically
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 2.1.0
+@version: 2.2.0
 """
 
 import yaml
@@ -48,52 +48,52 @@ class EbandParams(object):
         # }
 
         # old version 07.12.2017
-        # self.do_params = {
-        #     # Maximum linear velocity
-        #     'max_vel_lin': {'value': [0.0, 1.0, 2.0], 'step': [0.75, 1.25]},
-        #     # Maximum rotational velocity
-        #     'max_vel_th': {'value': [0.0, 0.5, 2.0], 'step': [0.2, 1.5]},
-        #     # Damp maximal translational acceleration
-        #     'max_translational_acceleration': {'value': [0.0, 0.4, 1.5], 'step': [0.3, 1.0]},
-        #     # Damp maximal rotational acceleration
-        #     'max_rotational_acceleration': {'value': [0.0, 0.2, 1.0], 'step': [0.4, 0.8]},
-        #     # Scaling factor for veocity calculation
-        #     'scaled_radius_factor': {'value': [0.0, 4.0, 7.0], 'step': [2.0, 6.0]},
-        #     # Controller settings
-        #     'k_prop': {'value': [0.0, 4.0, 10.0], 'step': [2.0, 7.0]},
-        #     'k_damp': {'value': [0.0, 3.5, 10.0], 'step': [2.0, 7.0]},
-        #     # Activate smoothing option at start and end
-        #     'smoothing_enabled': {'value': [true, true, false], 'step': [true, false]},
-        #     # Minimum relative overlap two bubbles must have to be treated as connected
-        #     'eband_min_relative_bubble_overlap': {'value': [0.5, 0.7, 1.0], 'step': [0.5, 0.9]},
-        #     'drive_residual_band': {'value': [true, true, false], 'step': [true, false]},
-        #     # -----------------------------------------------------------------
-        #     # select kinematics: {omnidirectional, differential}
-        #     # -----------------------------------------------------------------
-        #     'kinematics_string': {'value': ['omnidirectional', 'omnidirectional', 'differential'],
-        #                           'step': ['omnidirectional', 'differential']}
-        # }
-
-        # new version 07.12.2017
         self.do_params = {
             # Maximum linear velocity
-            'max_vel_lin': {'value': [0.0, 1.0, 2.0], 'step': [1.0, 1.25]},
+            'max_vel_lin': {'value': [0.0, 1.0, 2.0], 'step': [0.75, 1.25]},
             # Maximum rotational velocity
-            'max_vel_th': {'value': [0.0, 0.5, 2.0], 'step': [0.5, 1.5]},
+            'max_vel_th': {'value': [0.0, 0.5, 2.0], 'step': [0.2, 1.5]},
             # Damp maximal translational acceleration
-            'max_translational_acceleration': {'value': [0.0, 0.4, 1.5], 'step': [0.4, 1.0]},
+            'max_translational_acceleration': {'value': [0.0, 0.4, 1.5], 'step': [0.3, 1.0]},
             # Damp maximal rotational acceleration
-            'max_rotational_acceleration': {'value': [0.0, 0.2, 1.0], 'step': [0.2, 0.8]},
+            'max_rotational_acceleration': {'value': [0.0, 0.2, 1.0], 'step': [0.4, 0.8]},
             # Scaling factor for veocity calculation
-            'scaled_radius_factor': {'value': [0.0, 4.0, 7.0], 'step': [4.0, 6.0]},
+            'scaled_radius_factor': {'value': [0.0, 4.0, 7.0], 'step': [2.0, 6.0]},
+            # Controller settings
+            'k_prop': {'value': [0.0, 4.0, 10.0], 'step': [2.0, 7.0]},
+            'k_damp': {'value': [0.0, 3.5, 10.0], 'step': [2.0, 7.0]},
+            # Activate smoothing option at start and end
+            'smoothing_enabled': {'value': [true, true, false], 'step': [true, false]},
             # Minimum relative overlap two bubbles must have to be treated as connected
-            'eband_min_relative_bubble_overlap': {'value': [0.5, 0.7, 1.0], 'step': [0.7, 0.9]},
+            'eband_min_relative_bubble_overlap': {'value': [0.5, 0.7, 1.0], 'step': [0.5, 0.9]},
+            'drive_residual_band': {'value': [true, true, false], 'step': [true, false]},
             # -----------------------------------------------------------------
             # select kinematics: {omnidirectional, differential}
             # -----------------------------------------------------------------
             'kinematics_string': {'value': ['omnidirectional', 'omnidirectional', 'differential'],
                                   'step': ['omnidirectional', 'differential']}
         }
+
+        # new version 07.12.2017
+        #self.do_params = {
+        #    # Maximum linear velocity
+        #    'max_vel_lin': {'value': [0.0, 1.0, 2.0], 'step': [1.0, 1.25]},
+        #    # Maximum rotational velocity
+        #    'max_vel_th': {'value': [0.0, 0.5, 2.0], 'step': [0.5, 1.5]},
+        #    # Damp maximal translational acceleration
+        #    'max_translational_acceleration': {'value': [0.0, 0.4, 1.5], 'step': [0.4, 1.0]},
+        #    # Damp maximal rotational acceleration
+        #    'max_rotational_acceleration': {'value': [0.0, 0.2, 1.0], 'step': [0.2, 0.8]},
+        #    # Scaling factor for veocity calculation
+        #    'scaled_radius_factor': {'value': [0.0, 4.0, 7.0], 'step': [4.0, 6.0]},
+        #    # Minimum relative overlap two bubbles must have to be treated as connected
+        #    'eband_min_relative_bubble_overlap': {'value': [0.5, 0.7, 1.0], 'step': [0.7, 0.9]},
+        #    # -----------------------------------------------------------------
+        #    # select kinematics: {omnidirectional, differential}
+        #    # -----------------------------------------------------------------
+        #    'kinematics_string': {'value': ['omnidirectional', 'omnidirectional', 'differential'],
+        #                          'step': ['omnidirectional', 'differential']}
+        #}
 
         self.maybe_params = {
             # gain for internal forces (Elasticity of Band)
@@ -199,7 +199,7 @@ class EbandParams(object):
             'trjFollowingMeasure': 0.75,
             'trjOrientation': false,
             'trjTollerance': 0.01,
-            'use_local_replanning': false,
+            'use_local_replanning': true,
             'virtual_mass': 0.75,
             'wait_for_recovery': false
         }
