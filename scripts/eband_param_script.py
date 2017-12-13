@@ -7,6 +7,15 @@ Created on Nov 7, 2017
 @attention: Generate the 'move_base_eband_params.yaml' automatically
 @contact: albus.marcel@gmail.com (Marcel Albus)
 @version: 2.2.0
+
+
+#############################################################################################
+
+History:
+- v2.2.0: Bugfix with 'use_local_replanning' --> use_local_replanning needs to be true!
+- v2.1.0:
+- v2.0.0:
+- v1.0.0: first push
 """
 
 import yaml
@@ -206,7 +215,7 @@ class EbandParams(object):
 
         self.rospack = rospkg.RosPack()  # get path for ROS package
         self.dst_path = self.rospack.get_path('msh_navigation_config')
-        self.dst_path = self.dst_path + '/robots/cob4-7/nav'
+        self.dst_path = self.dst_path + '/robots/cob4-2/nav'
 
     def create_value_dict(self, do_param_dict):
         '''
