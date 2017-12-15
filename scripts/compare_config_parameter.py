@@ -6,12 +6,13 @@ Created on Dec 15, 2017
 @author: flg-ma
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 1.1.0
+@version: 1.1.1
 
 
 #############################################################################################
 
 History:
+- v1.1.1: added bar annotations displaying the height
 - v1.1.0: errorbar plot now normal bar plot with min and max values as bars
 - v1.0.0: first push
 """
@@ -95,13 +96,15 @@ class CompareConfig:
         scale_factor = 1.0
         fig = plt.figure(222, figsize=(7.0 * scale_factor, 16.0 * scale_factor))
         ax1 = fig.add_subplot(111)
-        df2.plot.bar()
+        ax = df2.plot.bar()
+        for p in ax.patches:
+            ax.annotate(str(p.get_height()), (p.get_x() * 1.005, p.get_height() * 1.015))
         plt.legend()
         plt.grid(True)
         plt.savefig(self.pth + 'ChangedValues.pdf', bbox_inches='tight')
         # plt.show()
         fig.clf()
-        print '\033[92m' + '=' * 41 + ' Created Errorbar ' + '=' * 41 + '\033[0m'
+        print '\033[92m' + '=' * 41 + ' Created Changed Value Barplot ' + '=' * 41 + '\033[0m'
 
     def main(self):
         self.collect_dataframe()
