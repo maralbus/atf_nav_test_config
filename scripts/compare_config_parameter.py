@@ -6,21 +6,20 @@ Created on Dec 15, 2017
 @author: flg-ma
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 1.0.0
+@version: 1.1.0
 
 
 #############################################################################################
 
 History:
+- v1.1.0: errorbar plot now normal bar plot with min and max values as bars
 - v1.0.0: first push
 """
 
 import os
 import yaml
-import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
 
 
 class CompareConfig:
@@ -58,9 +57,6 @@ class CompareConfig:
             counter += 1
             if counter % 20 == 0:  # output every 20 directories
                 print 'Directories saved: ' + str(counter) + ' / ' + str(self.directories.__len__())
-        print df.mean()  # mean values of dataframe
-        print '=' * 100
-        print df.std()  # standard deviation of dataframe
         # df.to_csv(self.pth + 'Config.csv')
         self.df = df.copy()  # save dataframe
 
@@ -70,28 +66,37 @@ class CompareConfig:
         :return: --
         '''
         df = self.df.copy()  # copy df
+
         columns = df.columns.tolist()
         for params in self.do_params:
             columns.remove(params)  # delete all unnecessary entries from the columns list
         df = df.drop(columns, axis=1)  # drop every column not changed
-        print df.head(5)  # print first 'n' rows
+
+        df = df.drop('kinematics_string', axis=1) # because strings can't be displayed
+
+        for col in df:
+            df.loc[0, col] = df.max()[col]  # save max of column in first row
+            df.loc[1, col] = df.min()[col]  # save min of column in second row
+        df2 = df.loc[0:1, :].copy()  # copy only first 2 rows
+        df2 = df2.transpose()  # transpose array
+
         print '=' * 100
+        print df2.head(5)
+        print '=' * 100
+        df2 = df2.rename(columns={0:'max', 1:'min'})
 
         means = df.mean()  # means of all values
         print '\033[94m' + 'average values' + '\033[0m'
         print means
         print '=' * 100
-        print '\033[94m' + 'standard deviation' + '\033[0m'
-        print df.std()
+        # print '\033[94m' + 'standard deviation' + '\033[0m'
+        # print df.std()
 
         scale_factor = 1.0
-        figsize_y = 16.0 # y-size of the canvas for the plot
-        fig = plt.figure(222, figsize=(7.0 * scale_factor, figsize_y * scale_factor))
-        ax1 = fig.add_subplot(411)
-        means.plot.bar(yerr=df.std(), ax=ax1, error_kw={'capsize': figsize_y, 'elinewidth': 2.0})
-        # plt.xticks(rotation=45)
-        blue_patch = mpatches.Patch(color='blue', label='value')
-        plt.legend(handles=[blue_patch])
+        fig = plt.figure(222, figsize=(7.0 * scale_factor, 16.0 * scale_factor))
+        ax1 = fig.add_subplot(111)
+        df2.plot.bar()
+        plt.legend()
         plt.grid(True)
         plt.savefig(self.pth + 'ChangedValues.pdf', bbox_inches='tight')
         # plt.show()
