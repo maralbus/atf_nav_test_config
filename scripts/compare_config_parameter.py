@@ -6,12 +6,13 @@ Created on Dec 15, 2017
 @author: flg-ma
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 1.1.1
+@version: 1.2.0
 
 
 #############################################################################################
 
 History:
+- v1.2.0: added filepath if/else in __init__
 - v1.1.1: added bar annotations displaying the height
 - v1.1.0: errorbar plot now normal bar plot with min and max values as bars
 - v1.0.0: first push
@@ -24,10 +25,15 @@ import matplotlib.pyplot as plt
 
 
 class CompareConfig:
-    def __init__(self):
-        print '=' * 100
+    def __init__(self, filepath=None):
+        print '\033[94m' + '=' * 100 + '\033[0m'
+        print '\033[94m' + '=' * 42 + ' Compare Config ' + '=' * 42 + '\033[0m'
+        print '\033[94m' + '=' * 100 + '\033[0m'
         try:
-            self.pth = raw_input('Please enter Path to YAML files (e.g: \'/home/flg-ma/TestYaml/\'): ')
+            if filepath is None:
+                self.pth = raw_input('Please enter Path to generated testcase output (e.g: \'/home/flg-ma/Test/\'): ')
+            else:
+                self.pth = filepath
             print 'Collecting directories in given path...'
             self.directories = os.walk(self.pth).next()[1]
         except StopIteration:  # catch error when there is no valid directory given
@@ -104,7 +110,7 @@ class CompareConfig:
         plt.savefig(self.pth + 'ChangedValues.pdf', bbox_inches='tight')
         # plt.show()
         fig.clf()
-        print '\033[92m' + '=' * 41 + ' Created Changed Value Barplot ' + '=' * 41 + '\033[0m'
+        print '\033[92m' + '=' * 34 + ' Created Changed Value Barplot ' + '=' * 35 + '\033[0m'
 
     def main(self):
         self.collect_dataframe()
