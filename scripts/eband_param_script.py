@@ -6,12 +6,13 @@ Created on Nov 7, 2017
 @author: flg-ma
 @attention: Generate the 'move_base_eband_params.yaml' automatically
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 2.3.0
+@version: 2.3.1
 
 
 #############################################################################################
 
 History:
+- v2.3.1: updated 'step' values for new configurations
 - v2.3.0: 'drive_residual_band' necessary to perform replanning --> must be true! --> set on dead_params list
 - v2.2.0: Bugfix with 'use_local_replanning' --> use_local_replanning needs to be true!
 - v2.1.0:
@@ -87,17 +88,17 @@ class EbandParams(object):
         # new version 07.12.2017
         self.do_params = {
             # Maximum linear velocity
-            'max_vel_lin': {'value': [0.0, 1.0, 2.0], 'step': [1.0, 1.25]},
+            'max_vel_lin': {'value': [0.0, 1.0, 2.0], 'step': [0.75, 1.0, 1.10, 1.25]},
             # Maximum rotational velocity
-            'max_vel_th': {'value': [0.0, 0.5, 2.0], 'step': [0.5, 1.5]},
+            'max_vel_th': {'value': [0.0, 0.5, 2.0], 'step': [0.5, 1.0, 1.5]},
             # Damp maximal translational acceleration
-            'max_translational_acceleration': {'value': [0.0, 0.4, 1.5], 'step': [0.4, 1.0]},
+            'max_translational_acceleration': {'value': [0.0, 0.4, 1.5], 'step': [0.4, 0.75, 1.0]},
             # Damp maximal rotational acceleration
-            'max_rotational_acceleration': {'value': [0.0, 0.2, 1.0], 'step': [0.2, 0.8]},
+            'max_rotational_acceleration': {'value': [0.0, 0.2, 1.0], 'step': [0.2, 0.5, 0.8]},
             # Scaling factor for veocity calculation
             'scaled_radius_factor': {'value': [0.0, 4.0, 7.0], 'step': [4.0, 6.0]},
             # Minimum relative overlap two bubbles must have to be treated as connected
-            'eband_min_relative_bubble_overlap': {'value': [0.5, 0.7, 1.0], 'step': [0.7, 0.9]},
+            'eband_min_relative_bubble_overlap': {'value': [0.5, 0.7, 1.0], 'step': [0.5, 0.7, 0.8, 0.9]},
             # -----------------------------------------------------------------
             # select kinematics: {omnidirectional, differential}
             # -----------------------------------------------------------------
@@ -260,7 +261,7 @@ class EbandParams(object):
         counter = 1
         for dict in output_list:
             filename = 'move_base_eband_params' + '_' + str(counter) + '.yaml'
-            stream = file('yaml_files/' + filename, 'w')
+            stream = file('yaml_files_new/' + filename, 'w')
             for key, value in dict.iteritems():
                 # print key, ':', value
                 self.all_params[key] = value
@@ -336,8 +337,8 @@ class EbandParams(object):
         # print '=' * 100
 
     def main(self):
-        self.change_value()
-        # self.create_value_dict(self.do_params)
+        # self.change_value()
+        self.create_value_dict(self.do_params)
 
 
 if __name__ == '__main__':
