@@ -6,12 +6,13 @@ Created on Nov 22, 2017
 @author: flg-ma
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 4.3.0
+@version: 4.4.0
 
 
 #############################################################################################
 
 History:
+- v4.4.0: added filepath if/else in __init__
 - v4.3.0:   * updated commandline output
             * create dataframe list to generate all threshold plots in one run
             * deleted 'threshold' parameter in 'drop_threshold' func because all threshold plots are generated at once
@@ -33,7 +34,6 @@ History:
 """
 
 import yaml
-import shutil
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -45,11 +45,16 @@ from matplotlib.offsetbox import AnchoredOffsetbox, TextArea, DrawingArea, HPack
 
 
 class CompareResults:
-    def __init__(self):
+    def __init__(self, filepath=None):
         # self.pth = '/home/flg-ma/Test/'  # filepath where the generated 'yaml'-directories are saved
-        print '=' * 100
+        print '\033[94m' + '=' * 100 + '\033[0m'
+        print '\033[94m' + '=' * 42 + ' Compare Results ' + '=' * 41 + '\033[0m'
+        print '\033[94m' + '=' * 100 + '\033[0m'
         try:
-            self.pth = raw_input('Please enter Path to generated testcase output (e.g: \'/home/flg-ma/Test/\'): ')
+            if filepath is None:
+                self.pth = raw_input('Please enter Path to generated testcase output (e.g: \'/home/flg-ma/Test/\'): ')
+            else:
+                self.pth = filepath
             if os.path.exists(self.pth + 'Dataframe.csv'):
                 pass
             else:
@@ -278,6 +283,7 @@ class CompareResults:
             self.plot_rectangle(figure=fig, axis=ax)
             plt.savefig(self.pth + 'Heatmap_Threshold_' + str(n) + '.pdf', bbox_inches='tight')
             fig.clf()
+            sns.reset_orig()
             # plt.show()  # show heatmap
 
     def drop_threshold(self, dataframe_bool):
@@ -369,7 +375,7 @@ class CompareResults:
         print '\033[94m' + 'standard deviation' + '\033[0m'
         print gp.std()
 
-        scale_factor = 1.4
+        scale_factor = 0.9
         fig = plt.figure(222, figsize=(13.8 * scale_factor, 8.6 * 2.2))
         ax1 = fig.add_subplot(411)
         means.plot.bar(yerr=gp.std(), ax=ax1, error_kw={'elinewidth': 2})
