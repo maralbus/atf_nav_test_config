@@ -6,12 +6,14 @@ Created on Dec 11, 2017
 @author: flg-ma
 @attention: Set the time metrics to true if better than expected
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 1.0.0
+@version: 1.1.0
 
 
 #############################################################################################
 
 History:
+- v1.1.0:   * wrapped notification txt in try-except block
+            * added filepath if/else in __init__
 - v1.0.0: first push
 """
 
@@ -19,15 +21,19 @@ true = True
 false = False
 
 import os
-import shutil
 import yaml
 
 
 class SetTimeTrue:
-    def __init__(self):
-        print '=' * 100
+    def __init__(self, filepath=None):
+        print '\033[94m' + '=' * 100 + '\033[0m'
+        print '\033[94m' + '=' * 43 + ' Set Time True ' + '=' * 42 + '\033[0m'
+        print '\033[94m' + '=' * 100 + '\033[0m'
         try:
-            self.pth = raw_input('Please enter Path to generated testcase output (e.g: \'/home/flg-ma/Test/\'): ')
+            if filepath is None:
+                self.pth = raw_input('Please enter Path to generated testcase output (e.g: \'/home/flg-ma/Test/\'): ')
+            else:
+                self.pth = filepath
             if os.path.exists(self.pth + 'Dataframe.csv'):
                 exit('\'Datframe.csv\' found in given path, please delete file first and start again')
                 pass
@@ -37,6 +43,8 @@ class SetTimeTrue:
         except StopIteration:  # catch error when there is no valid directory given
             exit('The directory path does not exist')
 
+        print '\033[92m' + '=' * 30 + ' Set Time True ' + '=' * 30 + '\033[0m'
+        print '\033[92m' + '=' * 30 + ' ' + self.pth + ' ' + '=' * 30 + '\033[0m'
         print '=' * 100
 
         self.yaml_directory = 'results_yaml'  # output 'yaml'-directory
@@ -60,7 +68,7 @@ class SetTimeTrue:
                     data_dict['testblock_nav']['time'][0]['groundtruth_result'] = true
                     print '=' * 80
                     print 'Data:', data_dict['testblock_nav']['time'][0]['data'], '<\t Groundtruth:', \
-                    data_dict['testblock_nav']['time'][0]['groundtruth']
+                        data_dict['testblock_nav']['time'][0]['groundtruth']
                     print filepath
                     print '=' * 80
                     # save 'yaml'-file in same folder as old, and overwrite old
@@ -70,12 +78,16 @@ class SetTimeTrue:
                     stream.close()
         # generated README file to indicate that files have been corrected
         os.chdir(self.pth)
-        os.mknod('SETTIMETRUE.txt')
-        stream = file(self.pth + '/SETTIMETRUE.txt', 'w')
-        stream.write('Every \'YAML\' in this directory was edited with the \'set_time_true.py\'-script.')
-        stream.write(
-            '\nThe \'groundtruth_result\' for the \'time\'-metrics is set to \'true\' if the \'data\' is below the \'groundtruth_data\'')
-        stream.close()
+        try:
+            os.mknod('SETTIMETRUE.txt')
+            stream = file(self.pth + '/SETTIMETRUE.txt', 'w')
+            stream.write('Every \'YAML\' in this directory was edited with the \'set_time_true.py\'-script.')
+            stream.write(
+                '\nThe \'groundtruth_result\' for the \'time\'-metrics is set to \'true\' if the \'data\' is below the \'groundtruth_data\'')
+            stream.close()
+        except OSError as e:
+            print '\033[93m' + 'SETTIMETRUE.txt Error:', e, '\033[0m'
+            print '=' * 80
 
 
 if __name__ == '__main__':
