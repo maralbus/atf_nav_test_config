@@ -18,7 +18,7 @@ History:
 from compare_results import CompareResults
 from compare_config_parameter import CompareConfig
 from set_time_true import SetTimeTrue
-import os
+
 
 class Evaluate:
     def __init__(self):
@@ -30,17 +30,20 @@ class Evaluate:
             exit('The directory path does not exist')
         print '=' * 100
 
-
-
     def main(self):
-        stt = SetTimeTrue(filepath=self.pth)
-        stt.set_yaml_time_true()
+        '''
+        start all classes to evaluate the data on the given path
+        :return: --
+        '''
+        stt = SetTimeTrue(filepath=self.pth)  # constructor of 'SetTimeTrue'
+        stt.set_yaml_time_true()  # start stt
 
-        cr = CompareResults(filepath=self.pth)
-        cr.main()
+        cr = CompareResults(filepath=self.pth)  # constructor of 'CompareResults'
+        cr.main()  # start cr
 
-        cc = CompareConfig(filepath=self.pth)
-        cc.main()
+        cc = CompareConfig(filepath=self.pth)  # constructor of 'CompareConfig'
+        cc.main()  # start cc
+        print '\n'
         print '\033[92m' + '=' * 100 + '\033[0m'
         print '\033[92m' + '=' * 39 + ' Finished evaluating ' + '=' * 40 + '\033[0m'
         print '\033[92m' + '=' * 100 + '\033[0m'

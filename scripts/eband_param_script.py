@@ -30,8 +30,6 @@ false = False
 
 
 class EbandParams(object):
-    """docstring for EbandParams"""
-
     def __init__(self):
         # self.do_params = {
         #     # Maximum linear velocity
