@@ -110,9 +110,9 @@ do_params = {
 list1 = ['test', 'test2', 'test3']
 list2 = [5, 6, 7]
 list3 = ['Ni', 'Nini', 'Ninini']
-dict1 = {'eins': {'values': [1,2]},
-		 'zwei': {'values': [11,22,33]},
-		 'drei': {'values': [111,222]}}
+dict1 = {'eins': {'step': [1,2]},
+		 'zwei': {'step': [11,22,33]},
+		 'drei': {'step': [111,222]}}
 
 
 def create_value_dict(do_param_dict):
@@ -147,4 +147,5 @@ def create_value_dict(do_param_dict):
 	print '=' * 80
 	return output_list
 
-print create_value_dict(do_params)[0]
+for value in create_value_dict(dict1):
+	print '-', value
