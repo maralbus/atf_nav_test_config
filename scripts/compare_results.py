@@ -6,12 +6,17 @@ Created on Nov 22, 2017
 @author: flg-ma
 @attention: compare the output results of the ATF tests
 @contact: albus.marcel@gmail.com (Marcel Albus)
-@version: 4.4.0
+@version: 4.5.0
 
 
 #############################################################################################
 
 History:
+- v4.5.0: improved errorbar plot
+            * increased xtick size
+            * renamed xticks and added wordwrap for xaxis names
+            * increased label size
+            * set label to upper left corner
 - v4.4.0: added filepath if/else in __init__
 - v4.3.0:   * updated commandline output
             * create dataframe list to generate all threshold plots in one run
@@ -361,26 +366,29 @@ class CompareResults:
         print '=' * 100
         gp = df.groupby(['testcase'])
 
-        # means = gp.mean().rename(index={'line_passage': 'Line Passage',
-        #                                 'line_passage_obstacle': 'Line Passage Obstacle',
-        #                                 'line_passage_person_moving': 'Line Passage Person Moving',
-        #                                 'line_passage_spawn_obstacle': 'Line Passage Spawn Obstacle',
-        #                                 'narrow_passage_2_cone': 'Narrow Passage Two Cone',
-        #                                 't_passage': 'T Passage',
-        #                                 't_passage_obstacle': 'T Passage Obstacle'})
+        rename_dict = {'line_passage': 'Line Passage',
+                       'line_passage_obstacle': 'Line Passage\nObstacle',
+                       'line_passage_person_moving': 'Line Passage\nPerson Moving',
+                       'line_passage_spawn_obstacle': 'Line Passage\nSpawn Obstacle',
+                       'narrow_passage_2_cone': 'Narrow Passage\nTwo Cone',
+                       't_passage': 'T Passage',
+                       't_passage_obstacle': 'T Passage\nObstacle'}
         means = gp.mean()  # first mean, then rename, otherwise no errorbars are shown
+        means = means.rename(index=rename_dict)  # rename means
+        error = gp.std().rename(index=rename_dict)  # rename standard deviation
         print '\033[94m' + 'average values' + '\033[0m'
         print means
         print '=' * 100
         print '\033[94m' + 'standard deviation' + '\033[0m'
-        print gp.std()
+        print error
 
-        scale_factor = 0.9
-        fig = plt.figure(222, figsize=(13.8 * scale_factor, 8.6 * 2.2))
+        scale_factor = 1.2
+        fig = plt.figure(222, figsize=(13.8 * scale_factor, 12.6 * 2.2))
         ax1 = fig.add_subplot(411)
-        means.plot.bar(yerr=gp.std(), ax=ax1, error_kw={'elinewidth': 2})
-        # plt.xticks(rotation=45)
-        plt.legend()
+        ax = means.plot.bar(yerr=error, ax=ax1, error_kw={'elinewidth': 2})
+        plt.xticks(rotation=90, fontsize=20)
+        ax.xaxis.label.set_size(20)
+        plt.legend(loc=2, fontsize=12)
         plt.grid(True)
         plt.savefig(self.pth + 'Errorbar.pdf', bbox_inches='tight')
         fig.clf()
