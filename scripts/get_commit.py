@@ -17,6 +17,7 @@ class GetCommit:
     def __init__(self):
         self.dir_path = '/home/flg-ma/git/catkin_ws/src'
         self.directories = os.walk(self.dir_path).next()[1]
+        # working testcase config
         self.commits = {'ackermann_msgs': '0b8512d0bb5a4c7bc185f2be80bc78b85febf717',
                         'cob_android': 'b801d07d4b169739abec74d1a83425993f9b7cf3',
                         'cob_calibration_data': '8912e878decc0e5a0153f7e0ae6287be37b79499',
@@ -88,8 +89,8 @@ class GetCommit:
         for pth in self.directories:
             print pth
             os.chdir(self.dir_path + '/' + pth)
-            startstring = 'git checkout ' + self.commits[pth]
-            # os.system(startstring)
+            startstring = 'git checkout -f ' + self.commits[pth]
+            os.system(startstring)
             print startstring
 
     def compare(self, dict):
@@ -98,6 +99,11 @@ class GetCommit:
             print 'True'
             print '=' * 80
         else:
+            print '=' * 80
+            for key, values in dict.iteritems():
+                if values != self.commits[key]:
+                    print 'Difference:\t', key, ' -- ', values
+                    print 'Right:\t\t', key, ' -- ', self.commits[key]
             print '=' * 80
             print 'False'
             print '=' * 80
