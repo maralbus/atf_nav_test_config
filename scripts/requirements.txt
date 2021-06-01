@@ -261,7 +261,7 @@ unity-lens-photos==1.0
 ur-driver==1.1.10
 urdfdom-py==0.3.3
 urlgrabber==3.9.1
-urllib3==1.7.1
+urllib3==1.26.5
 vcstools==0.1.39
 VTK==5.8.0
 wadllib==1.3.2
